@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 import { playSond } from './globalFunction';
-import { BASEURL } from './serveur';
+import { BASEROOT } from './serveur';
 export const Success = Swal.mixin({
     toast             : true,
     position          : 'top-end',
@@ -15,7 +15,7 @@ export const Success = Swal.mixin({
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
-        playSond(BASEURL+"assets/audio/new-notification-138807.mp3"); //success
+        playSond(BASEROOT+"assets/audio/new-notification-138807.mp3"); //success
     }
 });
 
@@ -33,7 +33,7 @@ export const Danger = Swal.mixin({
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
-        playSond(BASEURL+"assets/audio/system-error-notice-132470.mp3"); //error sond
+        playSond(BASEROOT+"assets/audio/system-error-notice-132470.mp3"); //error sond
     }
 });
 
@@ -51,7 +51,7 @@ export const DangerBottom = Swal.mixin({
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
-        playSond(BASEURL+"assets/audio/system-error-notice-132470.mp3"); //error sond
+        playSond(BASEROOT+"assets/audio/system-error-notice-132470.mp3"); //error sond
     }
 });
 
@@ -69,6 +69,6 @@ export const Info = Swal.mixin({
     didOpen: (toast) => {
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
-        playSond(BASEURL+"assets/audio/wrong-answer-129254.mp3"); //success
+        playSond(BASEROOT+"assets/audio/wrong-answer-129254.mp3"); //success
     }
 }); 

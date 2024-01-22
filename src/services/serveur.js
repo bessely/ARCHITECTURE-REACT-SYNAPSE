@@ -14,7 +14,7 @@ const SERVEUR = {
 var  BASEURL  =`${SERVEUR.PROTOCOL}${SERVEUR.SYNAPSE}:${SERVEUR.PORT}/convergence`;
 var  BASEROOT ="/"; // le chemin vers le htdoc : le nom du dossier dans htdoc
 if (process.env.NODE_ENV==="development") {
-      BASEURL  = `${SERVEUR.PROTOCOL}${SERVEUR.SYNAPSE_LOCAL}:${SERVEUR.PORT}/convergence`;
+      BASEURL  = `${SERVEUR.PROTOCOL}${SERVEUR.SYNAPSE}:${SERVEUR.PORT}/convergence`;
       BASEROOT ="/"; // le chemin vers le htdoc : le nom du dossier dans htdoc
 }
 
