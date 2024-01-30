@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { createProfilPrivilege, updateProfilPrivilege, loadDataProfilPrivilegeList, setModalProfilPrivilege, setformErreur } from '../../../store/Profil/Privilege';
-import { PAGINATION } from "../../../globalComponents/Pagination";
-import Modal from '../../../globalComponents/Modal';
+import { useDispatch, useSelector } from 'react-redux';
+import Select from 'react-select';
 import { Info } from "../../../globalComponents/CustomToast";
 import { CustumSelectStyl } from '../../../globalComponents/CustumSelectStyl';
 import ErreurObject from '../../../globalComponents/ErreurObject';
+import Modal from '../../../globalComponents/Modal';
+import { PAGINATION } from "../../../globalComponents/Pagination";
+import { createProfilPrivilege, loadDataProfilPrivilegeList, setModalProfilPrivilege, setformErreur, updateProfilPrivilege } from '../../../store/Profil/Privilege';
 import ProfilPrivilege from '../ProfilPrivilege';
-import Select from 'react-select';
 
 function ModalProfilPrivilege() {
 
@@ -45,7 +45,7 @@ function ModalProfilPrivilege() {
             erreur.STR_PROTYPE = " Erreur sur le Type'! ";
         }
         if (!currentProfilPrivilege.SOCIETE) {
-            erreur.SOCIETE = " Selectionnez une Société SVP ! ";
+            erreur.SOCIETE = " Selectionnez une Société! ";
         }
         if (!currentProfilPrivilege.STR_PRODESCRIPTION || currentProfilPrivilege.STR_PRODESCRIPTION === "" || currentProfilPrivilege.STR_PRODESCRIPTION.length <= 1) {
             erreur.STR_PRODESCRIPTION = " Erreur sur la Description ! ";
@@ -73,7 +73,7 @@ function ModalProfilPrivilege() {
             }
         }
         else {
-            Info.fire({ title: "Corrigez les erreurs SVP !" });
+            Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
     return (

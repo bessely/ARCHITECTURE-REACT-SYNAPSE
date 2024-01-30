@@ -57,7 +57,7 @@ function ModalTypeListe() {
                 Dispacth(updateTypeListe(currentTypeListe));
             }
         }else {
-            Info.fire({ title: "Corrigez les erreurs SVP !" });
+            Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
 

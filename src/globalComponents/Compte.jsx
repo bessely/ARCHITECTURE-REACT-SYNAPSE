@@ -29,7 +29,7 @@ function Compte() {
   /** Renseigne les selections dans le state de l'acteur en cours(currentActor) de creation ou de modification
    *@param {string} typelist= {pays, groupe; statusjuri}
    *@param {object} item reviens avec l'element selectionné 
-   * @function     
+   * @function
    */
   const setSelection = (item) => {
     Dispacth(setCurrentUtilisateur({ ...currentUtilisateur, [item.typeList]: item }));
@@ -74,7 +74,7 @@ function Compte() {
       erreur.STR_UTIPHONE = " Erreur sur le format du téléphone ! ";
     }
     if (!currentUtilisateur.AGENCE) {
-      erreur.AGENCE = " Sélectionnez une agence SVP ! ";
+      erreur.AGENCE = " Sélectionnez une agence! ";
     }
     return erreur;
   };
@@ -91,7 +91,7 @@ function Compte() {
       Dispacth(updateUtilisateur(currentUtilisateur));
     }
     else {
-      Info.fire({ title: "Corrigez les erreurs SVP !" });
+      Info.fire({ title: "Corrigez les erreurs!" });
     }
   };
 
@@ -104,7 +104,7 @@ function Compte() {
       Dispacth(changePassWord(currentUtilisateur));
     }
     else {
-      Info.fire({ title: "Corrigez les erreurs SVP !" });
+      Info.fire({ title: "Corrigez les erreurs!" });
     }
   };
   

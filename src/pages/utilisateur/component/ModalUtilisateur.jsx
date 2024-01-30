@@ -58,7 +58,7 @@ function ModalUtilisateur(){
         }
 
         if (!currentUtilisateur.AGENCE) {
-            erreur.AGENCE = " Sélectionnez une agence SVP ! ";
+            erreur.AGENCE = " Sélectionnez une agence! ";
         }
         return erreur;
     };
@@ -80,7 +80,7 @@ function ModalUtilisateur(){
             }
         }
         else {
-            Info.fire({ title: "Corrigez les erreurs SVP !" });
+            Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
     return (

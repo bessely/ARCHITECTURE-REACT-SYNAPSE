@@ -435,7 +435,7 @@ export const menuDispose = (LG_PROID) => {
                                                 dispatch(setMenu(menuList[0].menu));
                                                 return;
                                         }
-                                }else{;
+                                }else{
                                         Danger.fire({ title: "Désolé ! , Vous ne disposez pas encore de droit sur les fonctionnalités. Consulter un administrateur pour vos droits sur les menus de l'application. Déconnexion en cours..." });
                                         setTimeout(() => {
                                                 dispatch(doDisConnexion());
@@ -463,7 +463,7 @@ export const menuDispose = (LG_PROID) => {
                 }
         };
 };
-        
+
 /** DESTRUCTION DU MENU EN LOCALSTORAGE*/
 export const menuDestroy = () => {
         let oldUser = getThisInLocalstore("loginUtilisateur");

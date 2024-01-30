@@ -33,7 +33,7 @@ function ModalProfil() {
             erreur.STR_PROTYPE = " Erreur sur le Type'! ";
         }
         if (!currentProfil.SOCIETE) {
-            erreur.SOCIETE = " Sélectionnez une Société SVP ! ";
+            erreur.SOCIETE = " Sélectionnez une Société! ";
         }
         if (!currentProfil.STR_PRODESCRIPTION || currentProfil.STR_PRODESCRIPTION === "" || currentProfil.STR_PRODESCRIPTION.length <= 1) {
             erreur.STR_PRODESCRIPTION = " Erreur sur la Description ! ";
@@ -63,7 +63,7 @@ function ModalProfil() {
                 Dispacth(createSwitchProfilPrivilege(currentProfil.LG_PROID));
             }
         }else {
-            Info.fire({ title: "Corrigez les erreurs SVP !" });
+            Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
 

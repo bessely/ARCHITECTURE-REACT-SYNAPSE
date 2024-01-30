@@ -74,7 +74,7 @@ function ModalAgence() {
                 dispatch(updateAgence(currentAgence));
             }
         }else {
-            Info.fire({title: "Corrigez les erreurs SVP !"}); 
+            Info.fire({title: "Corrigez les erreurs!"}); 
         }
     };
     return (

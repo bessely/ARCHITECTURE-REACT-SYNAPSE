@@ -1,8 +1,9 @@
 {
   "name": "staterSynapseApp",
   "description": "Brève description de l'application à développer.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "useAlerte":true,
+  "useVoiceAlerte":true,
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",

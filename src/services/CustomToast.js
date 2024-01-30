@@ -1,5 +1,5 @@
 import Swal from 'sweetalert2';
-import { playSond } from './globalFunction';
+import { playSond, spellNotification } from './globalFunction';
 import { BASEROOT } from './serveur';
 export const Success = Swal.mixin({
     toast             : true,
@@ -16,6 +16,7 @@ export const Success = Swal.mixin({
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
         playSond(BASEROOT+"assets/audio/new-notification-138807.mp3"); //success
+        spellNotification(toast.getElementsByClassName("swal2-title")[0]?.innerText);
     }
 });
 
@@ -34,6 +35,7 @@ export const Danger = Swal.mixin({
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
         playSond(BASEROOT+"assets/audio/system-error-notice-132470.mp3"); //error sond
+        spellNotification(toast.getElementsByClassName("swal2-title")[0]?.innerText);
     }
 });
 
@@ -52,6 +54,7 @@ export const DangerBottom = Swal.mixin({
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
         playSond(BASEROOT+"assets/audio/system-error-notice-132470.mp3"); //error sond
+        spellNotification(toast.getElementsByClassName("swal2-title")[0]?.innerText);
     }
 });
 
@@ -70,5 +73,6 @@ export const Info = Swal.mixin({
         toast.addEventListener('mouseenter', Swal.stopTimer);
         toast.addEventListener('mouseleave', Swal.resumeTimer);
         playSond(BASEROOT+"assets/audio/wrong-answer-129254.mp3"); //success
+        spellNotification(toast.getElementsByClassName("swal2-title")[0]?.innerText);
     }
 }); 

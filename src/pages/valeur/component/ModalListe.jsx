@@ -74,7 +74,7 @@ function ModalListe(){
                 Dispacth(updateListe(currentListe));
             }
         }else {
-            Info.fire({ title: "Corrigez les erreurs SVP !" });
+            Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
 
