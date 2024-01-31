@@ -7,7 +7,7 @@ import { loadDataUtilisateurList } from '../../../services/Utilisateur';
 import { loadDataProfilList } from '../../../services/profil';
 import { setPagination } from '../../../store/Utilisateurs/Utilisateur';
 import ModalAssoProfil from '../../profil/component/ModalAssoProfil';
-import CreatRowUtilisateur from './CreatRowUtilisateur';
+import RenderActionUtilisateur from './RenderActionUtilisateur';
 
 function ListUtilisateur() {
     const { pagination, status, UtilisateurList } = useSelector((state) => state.utilisateurs);
@@ -29,21 +29,26 @@ function ListUtilisateur() {
     return (
         <>
             <DataTable
-                column={
+                footer        = {true}
+                dataTableName = "utilisateurlist"
+                data          = {UtilisateurList}
+                loader        = {status.utilisateur}
+                column        = {
                     [
-                        {name : '#'             ,class:"text-center",data:"#"                   },
-                        {name : 'AGENCE'        ,class:"text-center",data:"LG_AGEID"            },
-                        {name : 'NOM & PRENOMS' ,class:"text-center",data:"STR_UTIFIRSTLASTNAME"},
-                        {name : 'EMAIL'         ,class:"text-center",data:"STR_UTIMAIL"         },
-                        {name : 'TÉLÉPHONE'     ,class:"text-center",data:"STR_UTIPHONE"        },
-                        {name : 'UID'           ,class:"text-center",data:"STR_UTILOGIN"        },
-                        {name : 'ACTION'        ,class:"text-center",data:""                    },
+                        {name : '#'             ,class:"text-left",dataKey:"#"                    ,dataKeyClass:'text-left'},
+                        {name : 'AGENCE'        ,class:"text-center",dataKey:"LG_AGEID"             ,dataKeyClass:'text-left'},
+                        {name : 'NOM & PRENOMS' ,class:"text-center",dataKey:"STR_UTIFIRSTLASTNAME" ,dataKeyClass:'text-left'},
+                        {name : 'EMAIL'         ,class:"text-center",dataKey:"STR_UTIMAIL"          ,dataKeyClass:'text-center'},
+                        {name : 'TÉLÉPHONE'     ,class:"text-center",dataKey:"STR_UTIPHONE"         ,dataKeyClass:'text-center'},
+                        {name : 'UID'           ,class:"text-center",dataKey:"STR_UTILOGIN"         ,dataKeyClass:'text-center'},
+                        {name : 'ACTION'        ,class:"text-center",dataKey:"", action: (item)=>{
+                                return (<RenderActionUtilisateur item={item} />);
+                            }, 
+                        dataKeyClass:'text-center'
+                        }
                     ]
                 }
-                data={UtilisateurList}
-            >
-                <CreatRowUtilisateur />
-            </DataTable>
+            />
             {/* la pagination */}
             <Pagination
                 onClick   = {handlePageChange}
