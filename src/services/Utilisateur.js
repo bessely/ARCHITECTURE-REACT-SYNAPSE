@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { PAGINATION } from "../globalComponents/Pagination";
-import { getCurrentPath, getThisInLocalstore, purgeStrorage, writeThisInLocalstore } from "../services/globalFunction";
+import { getCurrentPath, getThisInLocalstore, packageJSON, purgeStrorage, writeThisInLocalstore } from "../services/globalFunction";
 import { BASEROOT, BASEURL } from "../services/serveur.js";
 import { MODALCOMPTEUTILISATEURDEFAULTSTATE, MODALUTILISATEURDEFAULTSTATE, MODALUTILISATEURLOCKUP, setCurrentProfile, setLoginUtilisateur, setMenu, setModalCompte, setModalProfile, setModalUtilisateur, setmodalLockFrame } from "../store/Utilisateurs/Utilisateur.js";
 import { Danger, Info, Success } from "./CustomToast.js";
@@ -189,7 +189,7 @@ export const doConnexion = createAsyncThunk('utilisateur/connect', async (data) 
                 var bodyFormData = new FormData();
                 bodyFormData.append("STR_UTILOGIN", data.STR_UTILOGIN);
                 bodyFormData.append("STR_UTIPASSWORD", data.STR_UTIPASSWORD);
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/doconnexion`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/doconnexion`, {
                         method : 'POST',
                         body   : bodyFormData
                 });
@@ -207,7 +207,7 @@ export const doUnlock = createAsyncThunk('utilisateur/unlock', async (data, { di
                 var bodyFormData = new FormData();
                 bodyFormData.append("STR_UTITOKEN", getLoginUtilisateur()?.token);
                 bodyFormData.append("STR_UTIPASSWORD", data.STR_UTIPASSWORD);
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/doconnexionunlock`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/doconnexionunlock`, {
                         method : 'POST',
                         body   : bodyFormData
                 });
@@ -229,7 +229,7 @@ export const lockSession = createAsyncThunk('utilisateur/lockSession', async (da
         try {
                 var bodyFormData = new FormData();
                 bodyFormData.append("STR_UTITOKEN", getLoginUtilisateur()?.token);
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/doconnexionlock`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/doconnexionlock`, {
                         method : 'POST',
                         body   : bodyFormData
                 });
@@ -249,16 +249,17 @@ export const doDisConnexion = createAsyncThunk('utilisateur/doDisConnexion', asy
         try {
                 var bodyFormData = new FormData();
                 bodyFormData.append("STR_UTITOKEN", getThisInLocalstore("loginUtilisateur").token);
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/dodisconnect`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/dodisconnect`, {
                         method : 'POST',
                         body   : bodyFormData
                 });
                 await res.json();
                 purgeStrorage();
+                Success.fire({ title: "A bientôt" });
                 window.location.href = landingPage ? landingPage : BASEROOT+"Connexion";
                 return;
         } catch (error) {
-                Danger.fire({ title: "Le serveur est injoingnable ! vérifier votre connexion" });
+                Success.fire({ title: "A bientôt" });
                 purgeStrorage();
                 window.location = landingPage ? landingPage : BASEROOT+"Connexion";
                 return;
@@ -270,7 +271,7 @@ export const revoverPassWord = createAsyncThunk('utilisateur/revoverPassWord', a
         try {
                 var bodyFormData = new FormData();
                 bodyFormData.append("LG_UTIID", STR_UTILOGIN!==undefined ? STR_UTILOGIN : getThisInLocalstore("loginUtilisateur").token);
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/ReinitialiseMDP`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/ReinitialiseMDP`, {
                         method : 'POST',
                         body   : bodyFormData
                 });
@@ -296,7 +297,7 @@ export const changePassWord = createAsyncThunk('utilisateur/changePassWord', asy
                 bodyFormData.append("STR_UTITOKEN", getThisInLocalstore("loginUtilisateur").token);
                 bodyFormData.append("OLD_PASSWORD", data.OLD_PASSWORD);
                 bodyFormData.append("NEW_PASSWORD", data.NEW_PASSWORD);
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/changePassword`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/changePassword`, {
                         method : 'POST',
                         body   : bodyFormData
                 });
@@ -387,7 +388,8 @@ export const switchProfil = (e, profil_ID) => {
                 if (profil_ID !== undefined) {
                         writeThisInLocalstore(profil_ID, "currentProfile");
                         if (getCurrentPath() === "Connexion") {
-                                Info.fire({ title: "Bienvenue " + getThisInLocalstore("loginUtilisateur")?.str_FIRST_LAST_NAME });
+                                // Info.fire({ title: "Bienvenue " + getThisInLocalstore("loginUtilisateur")?.str_FIRST_LAST_NAME });
+                                Info.fire({ title: "Bienvenue dans "+packageJSON.name});
                                 setTimeout(() => {
                                         window.location.href = BASEROOT;
                                 }, 1000);
@@ -422,7 +424,7 @@ export const menuDispose = (LG_PROID) => {
                                 var bodyFormData = new FormData();
                                 bodyFormData.append("LG_PROID", LG_PROID);
                                 bodyFormData.append("STR_UTITOKEN", getState().utilisateurs.loginUtilisateur.token);
-                                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/generemenu`, {
+                                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/generemenu`, {
                                         method : 'POST',
                                         body   : bodyFormData
                                 });

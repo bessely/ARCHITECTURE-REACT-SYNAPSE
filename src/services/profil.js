@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PAGINATION } from "../globalComponents/Pagination";
+import { PAGINATION } from "../globalComponents/Pagination.jsx";
 import { MODALPROFILDEFAULTSTATE, setCheckProfil, setModalProfil, } from "../store/Profil/Profil.js";
 import { Danger, Info, Success } from "./CustomToast.js";
 import { APINAMESPACE } from "./globalConstante.js";
@@ -214,7 +214,7 @@ export const createSwitchProfilPrivilege = createAsyncThunk("createSwitchProfilP
                         bodyFormData.append("LG_PROID", LG_PROID  );
                         bodyFormData.append("LG_PRIID", tabChecked); //<- tableau des id des privilèges selectionnés | deja stringifié au sortir du localstorage
                         bodyFormData.append("STR_UTITOKEN",getThisInLocalstore("loginUtilisateur").token);
-                        var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/switchPrivilege`,{
+                        var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/switchPrivilege`,{
                                 method : "POST",
                                 body   : bodyFormData,
                         });

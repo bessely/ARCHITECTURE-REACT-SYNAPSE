@@ -33,7 +33,7 @@ function ListAgence() {
                     [
                         {name : '#'           ,class:"text-left"  ,dataKey:"#"                  ,dataKeyClass:'text-left'  },
                         {name : 'CODE'        ,class:"text-center",dataKey:"STR_AGECODE"        ,dataKeyClass:'text-left'  },
-                        {name : 'VILLE'       ,class:"text-center",dataKey:"STR_VILLE"          ,dataKeyClass:'text-left'  },
+                        {name : 'VILLE'       ,class:"text-center",dataKey:"STR_VILLE"          ,dataKeyClass:'text-left'  ,},
                         {name : 'DESCRIPTION' ,class:"text-center",dataKey:"STR_AGEDESCRIPTION" ,dataKeyClass:'text-left'},
                         {name : 'TÉLÉPHONE'   ,class:"text-center",dataKey:"STR_AGEPHONE"       ,dataKeyClass:'text-center'},
                         {name : 'MAIL'        ,class:"text-center",dataKey:"STR_AGEMAIL"        ,dataKeyClass:'text-center'},

@@ -1,4 +1,5 @@
 import { MemoryRouter } from "react-router";
+import { Danger } from "./CustomToast";
 import { BASEURL } from "./serveur";
 
 export const packageJSON = require("../../package.json");
@@ -143,6 +144,26 @@ export const spellNotification=(textToSpell="Une erreur inconnue est survenue.")
         }
     }
     return false;
+}
+
+
+export const getFullYear = () => {
+    return new Date().getFullYear();
+};
+
+export const globalFecthXhr = async (url,{body, method})=>{
+                try {
+                        var res = await fetch(`${url}`, {
+                                method : method,
+                                body   : body
+                        });
+                        const response = await res.json();
+                        return response;
+                    } catch (error) {
+                        console.log(error);
+                        Danger.fire({title: "Le serveur est injoingnable ! vérifier votre connexion"}); 
+                        return error.message;
+                }
 }
 
 export const fileName = ()=>{

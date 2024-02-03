@@ -35,7 +35,7 @@ function ListUtilisateur() {
                 loader        = {status.utilisateur}
                 column        = {
                     [
-                        {name : '#'             ,class:"text-left",dataKey:"#"                    ,dataKeyClass:'text-left'},
+                        {name : '#'             ,class:"text-left"  ,dataKey:"#"                    ,dataKeyClass:'text-left'},
                         {name : 'AGENCE'        ,class:"text-center",dataKey:"LG_AGEID"             ,dataKeyClass:'text-left'},
                         {name : 'NOM & PRENOMS' ,class:"text-center",dataKey:"STR_UTIFIRSTLASTNAME" ,dataKeyClass:'text-left'},
                         {name : 'EMAIL'         ,class:"text-center",dataKey:"STR_UTIMAIL"          ,dataKeyClass:'text-center'},

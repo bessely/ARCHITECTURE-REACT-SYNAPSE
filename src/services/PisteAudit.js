@@ -22,7 +22,7 @@ export const loadDataPisteAuditList = createAsyncThunk('pisteauditeList/fetchAll
                 bodyFormData.append("length"       , data.listParPage ?? 10);
                 bodyFormData.append("DT_BEGIN", formatDate(data?.DT_BEGIN));
                 bodyFormData.append("DT_END"  , formatDate(data?.DT_END  ));
-                var res = await fetch(`${BASEURL}${APINAMESPACE.CONGIG}/listPiste`, {
+                var res = await fetch(`${BASEURL}${APINAMESPACE.CONFIG}/listPiste`, {
                                 method : 'POST',
                                 body   : bodyFormData
                 });

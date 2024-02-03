@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { PAGINATION } from "../globalComponents/Pagination";
+import { PAGINATION } from "../globalComponents/Pagination.jsx";
 import { MODALAGENCEDEFAULTSTATE, setModalAgence } from "../store/Agences/Agence.js";
 import { Danger, Success } from "./CustomToast.js";
 import { APINAMESPACE } from "./globalConstante.js";
 import { getThisInLocalstore } from "./globalFunction.js";
 import { BASEURL } from "./serveur.js";
 
-/** AGENCE [STATER] SYNAPSE GROUPE
+/** AGENCE [CONVERGENCE] SYNAPSE GROUPE
 * !!CENTRALISATION DES APPEL XHR VERS LES API AGENCE
 
 *@bessely

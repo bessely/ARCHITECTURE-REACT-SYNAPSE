@@ -1,13 +1,10 @@
 import React from 'react';
-import { packageJSON } from '../services/globalFunction';
+import { getFullYear, packageJSON } from '../services/globalFunction';
 
 /** LE PIED DE PAGE  CONTIEN LE COPIRIGHT ET LE LIEN VER LA PAGE DU CONSTRUCTEUR DE L'APPLICATION
  * @returns JSX
  */
 function Footer() {
-    const getFullYear = () => {
-        return new Date().getFullYear();
-    };
     return (
         <div className="footer-wrapper">
             <div className="footer-section f-section-1" />

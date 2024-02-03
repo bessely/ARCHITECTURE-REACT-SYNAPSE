@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ReactTooltip from 'react-tooltip';
+import DataTable from '../../../globalComponents/DataTable';
 import Pagination, { PAGINATION } from "../../../globalComponents/Pagination";
 import { loadDataPisteAuditList } from '../../../services/PisteAudit';
-import { BASEROOT } from '../../../services/serveur';
+import { formatLargeLabel } from '../../../services/globalFunction';
 import { setPagination } from '../../../store/PisteAudit/PisteAudit';
 
 function ListPisteAudite() {
@@ -20,49 +22,34 @@ function ListPisteAudite() {
     };
 
     return (
-        <div className="table-responsive">
-            <table id="zero-config" className="table dt-table-hover table-striped table table-center mb-3" role="grid" style={{ width: '100%' }}>
-                <thead>
-                    <tr>
-                        <th className='text-center'>#</th>
-                        <th className='text-center'>UTILISATEUR</th>
-                        <th className='text-center'>LIBELLÉ</th>
-                        <th className='text-center'>DATE</th>
-                        <th className='text-center'>TYPE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        status.pisteaudites === "loading" ?
-                            <tr ><td colSpan="7" className="text-center text-20"> <img src={BASEROOT+"assets/img/preloader.svg"} height="200" alt="loader" /> </td></tr>
-                            : //!status.agence==="success" ?
-                            pisteAuditList.length > 0 ?
-                                pisteAuditList.map((item, index) => {
-                                    return (
-
-                                        <tr className='text-center' key={"pisteAuditList" + index}>
-                                            {/* { console.log(pisteAuditList)} */}
-                                            <td>{index + 1}</td>
-                                            <td>{item.STR_UTIFIRSTLASTNAME}</td>
-                                            <td>{item.STR_PISLIBELLE}</td>
-                                            <td>{item.STR_PISDATE}</td>
-                                            <td>{item.STR_PISTYPE}</td>
-
-                                        </tr>
-                                    )
-                                })
-                                : // !!agenceList.length<=0 
-                                <tr>
-                                    <td colSpan="7" className="text-center text-20">
-                                        <span className="text-center mx-auto">
-                                            <img src={BASEROOT + "assets/img/empty-animate.svg"} className="m-0 p-0" height="220" alt="loader" />
-                                            <small className="text-danger text-10 d-block text-wrap m-0 p-0">Aucune Piste Audite trouvée !!!</small>
-                                        </span>
-                                    </td>
-                                </tr>
-                    }
-                </tbody>
-            </table>
+        <>
+            <DataTable
+                footer        = {true}
+                dataTableName = "pisteAuditList"
+                data          = {pisteAuditList}
+                loader        = {status.pisteaudites}
+                column        = {
+                    [
+                        {name : '#'           ,class:"text-left"  ,dataKey:"#"                    ,dataKeyClass:'text-left'  },
+                        {name : 'UTILISATEUR' ,class:"text-center",dataKey:"STR_UTIFIRSTLASTNAME" ,dataKeyClass:'text-left'  },
+                        {name : 'LIBELLÉ'     ,class:"text-center",dataKey:"STR_PISLIBELLE"       ,dataKeyClass:'text-center',
+                            action : (item)=>{
+                                return (
+                                    item?.STR_PISLIBELLE?.length>150 ?
+                                        <>
+                                            <ReactTooltip />
+                                            <div data-tip={item.STR_PISLIBELLE} > {formatLargeLabel(150,item.STR_PISLIBELLE)}</div>
+                                        </>
+                                    :
+                                        item.STR_PISLIBELLE
+                                );
+                        }
+                        },
+                        {name : 'DATE'        ,class:"text-center",dataKey:"STR_PISDATE"          ,dataKeyClass:'text-center'},
+                        {name : 'TYPE'        ,class:"text-center",dataKey:"STR_PISTYPE"          ,dataKeyClass:'text-center'},
+                    ]
+                }
+            />
             {/* la pagination */}
             <Pagination
                 onClick   = {handlePageChange}
@@ -70,7 +57,7 @@ function ListPisteAudite() {
                 forcePage = {pagination.currentPage}
             />
             {/* la pagination */}
-        </div>
+        </>
     )
 }
 

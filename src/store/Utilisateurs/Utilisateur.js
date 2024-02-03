@@ -3,7 +3,7 @@ import { PAGINATION } from "../../globalComponents/Pagination";
 import { Danger, Info } from "../../services/CustomToast.js";
 import { doConnexion, getDataUtilisateur, loadDataUtilisateurList, searchUtilisateur } from "../../services/Utilisateur.js";
 import { STATUS } from "../../services/globalConstante.js";
-import { getCurrentPath, getThisInLocalstore, purgeStrorage, writeThisInLocalstore } from "../../services/globalFunction.js";
+import { getCurrentPath, packageJSON, purgeStrorage, writeThisInLocalstore } from "../../services/globalFunction.js";
 import { BASEROOT } from "../../services/serveur.js";
 
 /** UTILISATEUR REDUCEUR [STATER] SYNAPSE GROUPE
@@ -138,11 +138,11 @@ export const UtilisateurSlice = createSlice({
                                                         Info.fire({ title: "Désolé ! Aucun résultat trouvé !" });
                                                 }
                                                 state.pagination = {
-                                                        listParPage: PAGINATION.listParPage,
-                                                        currentPage: state.pagination.changePageClick ? state.pagination.currentPage : 0,  // !si rechargement ou chargement simple des data currentPage=0 sinon currentPage reste par defaut la page designée l'hors du click sur la pâgination 
-                                                        changePageClick: false,
-                                                        listLenght: action.payload.recordsTotal,
-                                                        nbrPage: Math.ceil(result ?? 0 / PAGINATION.listParPage)
+                                                        listParPage     : PAGINATION.listParPage,
+                                                        currentPage     : state.pagination.changePageClick ? state.pagination.currentPage : 0,  // !si rechargement ou chargement simple des data currentPage=0 sinon currentPage reste par defaut la page designée l'hors du click sur la pâgination
+                                                        changePageClick : false,
+                                                        listLenght      : action.payload.recordsTotal,
+                                                        nbrPage         : Math.ceil(result ?? 0 / PAGINATION.listParPage)
                                                 };
                                         } else { // !<- pas de resultat  
                                                 Info.fire({ title: "Désolé ! Aucun résultat trouvé !" });
@@ -169,7 +169,7 @@ export const UtilisateurSlice = createSlice({
                                         if (action.payload.dataPro === undefined || action.payload.dataPro?.length===1 ) {
                                                 // prise en compte du seul profil dans le state et redirection 
                                                 writeThisInLocalstore(action.payload.lg_PROFIL_ID, "currentProfile");
-                                                Info.fire({ title: "Bienvenue " + getThisInLocalstore("loginUtilisateur")?.str_FIRST_LAST_NAME });
+                                                Info.fire({ title: "Bienvenue dans "+packageJSON.name});
                                                 setTimeout(() => {
                                                         window.location.href = BASEROOT;
                                                 }, 1000);

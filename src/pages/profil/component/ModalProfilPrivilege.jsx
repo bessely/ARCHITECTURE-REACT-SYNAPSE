@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Select from 'react-select';
-import { Info } from "../../../globalComponents/CustomToast";
 import { CustumSelectStyl } from '../../../globalComponents/CustumSelectStyl';
 import ErreurObject from '../../../globalComponents/ErreurObject';
 import Modal from '../../../globalComponents/Modal';
 import { PAGINATION } from "../../../globalComponents/Pagination";
+import { Info } from '../../../services/CustomToast';
 import { createProfilPrivilege, loadDataProfilPrivilegeList, setModalProfilPrivilege, setformErreur, updateProfilPrivilege } from '../../../store/Profil/Privilege';
 import ProfilPrivilege from '../ProfilPrivilege';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import { BASEROOT } from '../services/serveur';
 
 /**
@@ -34,6 +35,7 @@ function DataTable({children,column,footer=false,data,dataTableName,loader}) {
                                                 </thead>
                                 }
                                 <tbody>
+                                <ReactTooltip />
                                 {
                                         loader==="loading" ?
                                                 <tr ><td colSpan={column.length} className="text-center text-20"> <img src={BASEROOT+"assets/img/preloader.svg"} height="200" alt="loader" /> </td></tr>  
@@ -45,13 +47,13 @@ function DataTable({children,column,footer=false,data,dataTableName,loader}) {
                                                                         {
                                                                                 column.map((cell,x)=>{
                                                                                         return(
-                                                                                                cell?.dataKey==="#" ?
-                                                                                                        <td className={cell?.dataKeyClass}>{index+1}</td>
+                                                                                                cell?.name==="#" ?
+                                                                                                        <td className={cell?.dataKeyClasss}>{index+1}</td>
                                                                                                 :
                                                                                                         typeof(cell?.action) === "function" ?
-                                                                                                                <td className={cell?.dataKeyClass}>{cell?.action(item)}</td>
+                                                                                                                <td className={cell?.dataKeyClass}>{cell?.action(item,index)}</td>
                                                                                                         :
-                                                                                                                <td className={cell?.dataKeyClass}>{item[cell?.dataKey]}</td>
+                                                                                                                <td className={cell?.dataKeyClass}>{item[cell?.dataKey]!=="" ? item[cell?.dataKey] : "Non renseigné"}</td>
                                                                                         )
                                                                                 })
                                                                         }

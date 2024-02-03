@@ -7,7 +7,7 @@ export const STATUS = Object.freeze({
 export const APINAMESPACE = Object.freeze({
     AGENCE         : "/AgenceManager",
     UTILISATEUR    : "/UtilisateurManager",
-    CONGIG         : "/ConfigurationManager",
+    CONFIG         : "/ConfigurationManager",
     PROFIL         : "/ProfileManager",
     TYPELISTE      : "/ListeManager",
     SOCIETEMANAGER : "/SocieteManager",
