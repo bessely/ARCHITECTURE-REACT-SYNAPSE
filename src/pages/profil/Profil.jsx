@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Container from "../../globalComponents/Container";
 import NavBar from "../../globalComponents/NavBar";
 import { PAGINATION } from "../../globalComponents/Pagination";
-import { loadDataProfilList } from '../../services/profil';
+import { loadDataProfilList } from '../../services/Profil';
 import { initProfilState, loadDataProfilPrivilegeList } from '../../store/Profil/Privilege';
 import { setCurrentProfil, setModalProfil, setformErreur } from '../../store/Profil/Profil';
 import ListProfil from './component/ListProfil';

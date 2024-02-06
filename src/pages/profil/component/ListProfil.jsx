@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import DataTable from '../../../globalComponents/DataTable';
 import Pagination, { PAGINATION } from "../../../globalComponents/Pagination";
+import { loadDataProfilList } from '../../../services/Profil';
 import { formatLargeLabel } from '../../../services/globalFunction';
-import { loadDataProfilList } from '../../../services/profil';
 import { setPagination } from '../../../store/Profil/Profil';
 import RenderActionProfil from './RenderActionProfil';
 

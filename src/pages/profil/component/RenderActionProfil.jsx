@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import Swal from 'sweetalert2';
+import { collectProfilChecked, deleteProfil, getDataProfil } from '../../../services/Profil';
 import { getCurrentPath } from '../../../services/globalFunction';
-import { collectProfilChecked, deleteProfil, getDataProfil } from '../../../services/profil';
 import { loadDataProfilPrivilegeList } from '../../../store/Profil/Privilege';
 import { setCurrentProfil, setModalProfil, setformErreur } from '../../../store/Profil/Profil';
 

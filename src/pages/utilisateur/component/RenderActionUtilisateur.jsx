@@ -2,8 +2,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import Swal from 'sweetalert2';
+import { getBindProfilUser } from '../../../services/Profil';
 import { deleteUtilisateur, getDataUtilisateur } from '../../../services/Utilisateur';
-import { getBindProfilUser } from '../../../services/profil';
 import { setModalAssoProfil } from '../../../store/Profil/Profil';
 import { setCurrentUtilisateur, setModalUtilisateur, setformErreur } from '../../../store/Utilisateurs/Utilisateur';
 

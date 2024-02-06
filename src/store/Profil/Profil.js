@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { PAGINATION } from "../../globalComponents/Pagination";
 import { Danger, Info } from "../../services/CustomToast.js";
+import { getDataProfil, loadDataProfilList, searchProfil } from "../../services/Profil.js";
 import { STATUS } from "../../services/globalConstante.js";
-import { getDataProfil, loadDataProfilList, searchProfil } from "../../services/profil.js";
 
 /** PROFIL REDUCEUR [STATER] SYNAPSE GROUPE
 * !!CENTRALISATION DES STATES PROFIL

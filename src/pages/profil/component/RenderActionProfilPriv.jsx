@@ -1,6 +1,6 @@
 import React from 'react';
 import { Danger } from '../../../services/CustomToast';
-import { collectProfilChecked } from '../../../services/profil';
+import { collectProfilChecked } from '../../../services/Profil';
 
 function RenderActionProfilPriv({item,index}) {
         /** A la selection d'un privilège on coche ou dechoche le checkbox puis on garde en memoire tt les id de privileges cochés

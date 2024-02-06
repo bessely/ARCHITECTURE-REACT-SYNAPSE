@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Compte from "./globalComponents/Compte";
 import CustomLoader from './globalComponents/CustomLoader';
 // import SessionTimeOut from "./globalComponents/SessionTimeOut";
+import Preferences from "./globalComponents/Preferences";
 import RoutesApp from "./routes/Routes";
 import { pageSurveillance, sessionSurveillance } from "./services/Utilisateur";
 import { getCurrentPath, packageJSON } from "./services/globalFunction";
@@ -45,6 +46,7 @@ function App() {
           <>
             {/* TOUS CES COMPOSANTS SONT DISPONIBLES DE FACON GLOBAL DANS L'APPLICATION*/}
             <Compte />
+            <Preferences/>
             {/* <SessionTimeOut /> */}
             <CustomLoader/>
           </>
