@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ErreurObject from '../../../globalComponents/ErreurObject';
 import Modal from '../../../globalComponents/Modal';
 import { Info } from "../../../services/CustomToast";
-import { collectProfilChecked, createProfil, createSwitchProfilPrivilege, updateProfil } from '../../../services/profil';
+import { collectProfilChecked, createProfil, createSwitchProfilPrivilege, updateProfil } from '../../../services/Profil';
+import { purgeStrorage } from '../../../services/globalFunction';
 import { setCurrentProfil, setModalProfil, setformErreur } from '../../../store/Profil/Profil';
 import ListProfilPrivilege from './ListProfilPrivilege';
 
@@ -66,6 +68,13 @@ function ModalProfil() {
             Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
+
+    useEffect(() => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (!modalProfil.open) {
+            purgeStrorage("tabChecked");
+        }
+    },[modalProfil.open]);
 
     return (
         <Modal

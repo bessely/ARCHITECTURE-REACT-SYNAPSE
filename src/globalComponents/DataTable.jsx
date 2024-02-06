@@ -41,7 +41,7 @@ function DataTable({children,column,footer=false,data,dataTableName,loader}) {
                                                 <tr ><td colSpan={column.length} className="text-center text-20"> <img src={BASEROOT+"assets/img/preloader.svg"} height="200" alt="loader" /> </td></tr>  
                                         :
                                                 data?.length>0 ?
-                                                        data.map((item,index)=>{
+                                                        data.map((row,index)=>{
                                                                 return(
                                                                         <tr  key={dataTableName + index}>
                                                                         {
@@ -51,9 +51,9 @@ function DataTable({children,column,footer=false,data,dataTableName,loader}) {
                                                                                                         <td className={cell?.dataKeyClasss}>{index+1}</td>
                                                                                                 :
                                                                                                         typeof(cell?.action) === "function" ?
-                                                                                                                <td className={cell?.dataKeyClass}>{cell?.action(item,index)}</td>
+                                                                                                                <td className={cell?.dataKeyClass}>{cell?.action(row,index)}</td>
                                                                                                         :
-                                                                                                                <td className={cell?.dataKeyClass}>{item[cell?.dataKey]!=="" ? item[cell?.dataKey] : "Non renseigné"}</td>
+                                                                                                                <td className={cell?.dataKeyClass}>{row[cell?.dataKey]!=="" ? row[cell?.dataKey] : "Non renseigné"}</td>
                                                                                         )
                                                                                 })
                                                                         }

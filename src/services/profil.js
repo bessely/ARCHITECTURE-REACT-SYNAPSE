@@ -3,7 +3,7 @@ import { PAGINATION } from "../globalComponents/Pagination.jsx";
 import { MODALPROFILDEFAULTSTATE, setCheckProfil, setModalProfil, } from "../store/Profil/Profil.js";
 import { Danger, Info, Success } from "./CustomToast.js";
 import { APINAMESPACE } from "./globalConstante.js";
-import { getCurrentPath, getThisInLocalstore } from "./globalFunction.js";
+import { getCurrentPath, getThisInLocalstore, purgeStrorage, writeThisInLocalstore } from "./globalFunction.js";
 import { BASEURL } from "./serveur.js";
 
 /** PROFIL REDUCEUR [STATER] SYNAPSE GROUPE
@@ -305,7 +305,7 @@ export const getBindProfilUser = createAsyncThunk("getBindProfilUser/fetchAll",
                         bodyFormData.append("search_value", ""      );
                         bodyFormData.append("LG_SOCID"    , ""      );
                         bodyFormData.append("LG_UTIID"    , LG_UTIID);
-                        bodyFormData.append("STR_UTITOKEN",getThisInLocalstore("loginUtilisateur").token);
+                        bodyFormData.append("STR_UTITOKEN",getThisInLocalstore("loginUtilisateur")?.token);
                         var res = await fetch(`${BASEURL}${APINAMESPACE.PROFIL}/listProfilequick`,{
                                         method : "POST",
                                         body   : bodyFormData,
@@ -318,16 +318,19 @@ export const getBindProfilUser = createAsyncThunk("getBindProfilUser/fetchAll",
                                         for (let index = 0; index < checkboxList.length; index++) {
                                                 if (JSON.parse(checkboxList[index].getAttribute("data-profil")).LG_PROID === response[x].LG_PROID) {
                                                         checkboxList[index].checked = response[x].checkbox;
-                                                        resumeCheckedProfil.push(response[x].LG_PROID);
+                                                        if (response[x].checkbox) {
+                                                                resumeCheckedProfil.push(response[x].LG_PROID);
+                                                        }
                                                 }
                                         }
                                 }
-                                localStorage.removeItem("tabChecked");
-                                localStorage.setItem("tabChecked", JSON.stringify(resumeCheckedProfil));
+                                purgeStrorage("tabChecked");
+                                writeThisInLocalstore(resumeCheckedProfil,"tabChecked");
                                 dispatch(setCheckProfil(resumeCheckedProfil)); // mise à jour de la liste des profils rattachés au compte dans le state des profils selectionner pour le compte en cours au cas ou ya une modif
                         } else {
-                                if (getState().profil.modalAssoProfil.open) {
+                                if (getState()?.profil?.modalAssoProfil?.open) {
                                         dispatch(setCheckProfil([]));
+                                        purgeStrorage("tabChecked");
                                         Info.fire({title: "Pas encore de profils rattachés à cet utilisateur",});
                                 }
                         }
@@ -362,8 +365,8 @@ export const getBindProfil = createAsyncThunk("getBindProfil/fetchAll",
                                                         }
                                                 }
                                         }
-                                        localStorage.removeItem("tabChecked");
-                                        localStorage.setItem("tabChecked",JSON.stringify(resumeCheckedProfil));
+                                        purgeStrorage("tabChecked");
+                                        writeThisInLocalstore(resumeCheckedProfil,"tabChecked");
                                         dispatch(setCheckProfil(resumeCheckedProfil)); // mise à jour de la liste des profils rattachés au compte dans le state des profils selectionner pour le compte en cours au cas ou ya une modif
                                 } else {
                                         if (getState().corsocietes.modalAssoCompt.open) {
@@ -384,7 +387,7 @@ export const getBindProfil = createAsyncThunk("getBindProfil/fetchAll",
  * RECUPERATION DE TT LES PROFILS PRIVILEGE COCHES DEPUIS LE DOM
  **/
 export const collectProfilChecked = () => {
-        localStorage.removeItem("tabChecked");
+        purgeStrorage("tabChecked");
         let priv    = getCurrentPath() === "Utilisateur" || getCurrentPath() === "Societe" ? document.getElementsByClassName("profil") : document.getElementsByClassName("privileges_");
         let element = [];
         for (let index = 0; index < priv.length; index++) {
@@ -392,7 +395,7 @@ export const collectProfilChecked = () => {
                         element.push(priv[index].getAttribute("data-id"));
                 }
         }
-        localStorage.setItem("tabChecked", JSON.stringify(element));
+        writeThisInLocalstore(element,"tabChecked");
         return element;
 };
 
@@ -406,5 +409,4 @@ export const uncheckAllProfil = (classCssElmt) => {
         for (let index = 0; index < priv.length; index++) {
                 priv[index].checked = false;
         }
-        // localStorage.removeItem('tabChecked');
 };

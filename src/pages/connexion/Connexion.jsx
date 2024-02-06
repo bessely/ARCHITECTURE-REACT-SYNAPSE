@@ -14,7 +14,8 @@ function Connexion() {
     //     };
     const dispatch = useDispatch();
     useEffect(() => {
-        purgeStrorage();
+                purgeStrorage("loginUtilisateur");
+                purgeStrorage("currentProfile");
     },[]);
     const showPassword = (e) => {
         e.preventDefault();

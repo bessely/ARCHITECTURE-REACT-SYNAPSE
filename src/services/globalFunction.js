@@ -1,5 +1,4 @@
 import { MemoryRouter } from "react-router";
-import { Danger } from "./CustomToast";
 import { BASEURL } from "./serveur";
 
 export const packageJSON = require("../../package.json");
@@ -17,12 +16,6 @@ export function writeThisInLocalstore(laVariable, NomDeLaVariable) {
     @param {string} NomDeLaVariable le nom de recuperation de la variable ou de la constante
     @author @bessely
 */
-
-/**
- * CUSTUM LOCAL STORAGE SERVICES 
- * @param {string} NomDeLaVariable à récupéré dans le localstorage
- * @author @bessely
- */
 export function getThisInLocalstore(NomDeLaVariable) {
     return (JSON.parse(localStorage.getItem(NomDeLaVariable)));
 }
@@ -108,7 +101,7 @@ export const formatDate = (dateAformater)=>{
  * @author @bessely
  */
 export const playSond = (data=BASEURL+"assets/audio/pop-39222.mp3") =>{
-    if (packageJSON.useAlerte) {
+    if (getThisInLocalstore("prefAudio")) {
         console.log(data);
         const audio = new Audio(data);
         audio.play();
@@ -124,7 +117,7 @@ export const playSond = (data=BASEURL+"assets/audio/pop-39222.mp3") =>{
  * @author @bessely
  */
 export const spellNotification=(textToSpell="Une erreur inconnue est survenue.")=>{
-    if (packageJSON.useVoiceAlerte) {
+    if (getThisInLocalstore("prefVoice")) {
         if ('speechSynthesis' in window) { //Je vérifie dabord que cette fonctionalité est supportée par le navigateur
             for (let index = 0; index < speechSynthesis.getVoices().length; index++) { // je parcours les langues supportée
                 if (speechSynthesis.getVoices()[index].lang==="fr-FR") { // si francais supporté alors on joue la voix en français
@@ -150,21 +143,6 @@ export const spellNotification=(textToSpell="Une erreur inconnue est survenue.")
 export const getFullYear = () => {
     return new Date().getFullYear();
 };
-
-export const globalFecthXhr = async (url,{body, method})=>{
-                try {
-                        var res = await fetch(`${url}`, {
-                                method : method,
-                                body   : body
-                        });
-                        const response = await res.json();
-                        return response;
-                    } catch (error) {
-                        console.log(error);
-                        Danger.fire({title: "Le serveur est injoingnable ! vérifier votre connexion"}); 
-                        return error.message;
-                }
-}
 
 export const fileName = ()=>{
     console.log(__filename);

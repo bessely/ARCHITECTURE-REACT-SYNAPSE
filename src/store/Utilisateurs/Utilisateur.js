@@ -13,7 +13,7 @@ import { BASEROOT } from "../../services/serveur.js";
 *         :Codez en pensant que celui qui maintiendra votre code est un psychopathe qui connaît votre adresse.
 */
 
-export const MODALUTILISATEURDEFAULTSTATE       = { open: false, mode: "", title: "", button: "", inputstate: "", btnclass: "btn btn-primary my-2 text-18 col-4" };
+export const MODALUTILISATEURDEFAULTSTATE       = { open: false, mode: "", title: "", button: "", size: "xl", inputstate: "", btnclass: "btn btn-primary my-2 text-18 col-4" };
 export const MODALUTILISATEURLOCKUP             = { open: false, mode: "", size: "xx", title: "Long période d'inactivité détectée", button: true, buttonName: "Toujours là !!!", btnclass: "btn btn-block btn-danger shadow" };
 export const CURRENTUTILISATEURDEFAULTSATE      = [{ LG_UTIID: "", STR_UTIMAIL: "", STR_UTIPHONE: "", STR_UTIPIC: "", STR_UTIFIRSTNAME: "", STR_UTILASTNAME: "", STR_UTILOGIN: "", AGENCE: [{}] }];
 export const MODALPROFILUTILISATEURDEFAULTSTATE = { open: false, mode: "creation", size: "profil", title: "Choisissez un profil", button: false, };
@@ -34,6 +34,7 @@ const initialState = {
         status             : { utilisateur: STATUS.LOADING },
         menu               : [],
         subMenuState       : {},
+        modalPreferences   : MODALUTILISATEURDEFAULTSTATE
 };
 
 export const UtilisateurSlice = createSlice({
@@ -53,7 +54,8 @@ export const UtilisateurSlice = createSlice({
                 setStatus             (state, action) { state.status             = action.payload; },
                 setMenu               (state, action) { state.menu               = action.payload; },
                 setSubMenuState       (state, action) { state.subMenuState       = action.payload; },
-                setmodalLockFrame     (state, action) { state.modalLockFrame     = action.payload; },
+                setmodalLockFrame     (state, action) { state.modalLockFrame     = action.payload; }, 
+                setModalPreferences   (state, action) { state.modalPreferences   = action.payload; }, 
         },
         extraReducers: (builder) => {
                 builder
@@ -138,11 +140,11 @@ export const UtilisateurSlice = createSlice({
                                                         Info.fire({ title: "Désolé ! Aucun résultat trouvé !" });
                                                 }
                                                 state.pagination = {
-                                                        listParPage     : PAGINATION.listParPage,
-                                                        currentPage     : state.pagination.changePageClick ? state.pagination.currentPage : 0,  // !si rechargement ou chargement simple des data currentPage=0 sinon currentPage reste par defaut la page designée l'hors du click sur la pâgination
-                                                        changePageClick : false,
-                                                        listLenght      : action.payload.recordsTotal,
-                                                        nbrPage         : Math.ceil(result ?? 0 / PAGINATION.listParPage)
+                                                        listParPage: PAGINATION.listParPage,
+                                                        currentPage: state.pagination.changePageClick ? state.pagination.currentPage : 0,  // !si rechargement ou chargement simple des data currentPage=0 sinon currentPage reste par defaut la page designée l'hors du click sur la pâgination 
+                                                        changePageClick: false,
+                                                        listLenght: action.payload.recordsTotal,
+                                                        nbrPage: Math.ceil(result ?? 0 / PAGINATION.listParPage)
                                                 };
                                         } else { // !<- pas de resultat  
                                                 Info.fire({ title: "Désolé ! Aucun résultat trouvé !" });
@@ -155,10 +157,10 @@ export const UtilisateurSlice = createSlice({
                                         Info.fire({ title: "Désolé ! Aucun résultat trouvé !" });
                                 }
                         })
-                        //doConnexion
                         .addCase(doConnexion.fulfilled, (state, action) => {
                                 if (action.payload.code_statut === "1") {
-                                        purgeStrorage();
+                                        purgeStrorage("loginUtilisateur");
+                                        purgeStrorage("currentProfile");
                                         state.loginUtilisateur = action.payload;
                                         writeThisInLocalstore(action.payload, "loginUtilisateur");
                                         if (action.payload.dataPro?.length >= 2) {
@@ -169,6 +171,7 @@ export const UtilisateurSlice = createSlice({
                                         if (action.payload.dataPro === undefined || action.payload.dataPro?.length===1 ) {
                                                 // prise en compte du seul profil dans le state et redirection 
                                                 writeThisInLocalstore(action.payload.lg_PROFIL_ID, "currentProfile");
+                                                // Info.fire({ title: "Bienvenue " + getThisInLocalstore("loginUtilisateur")?.str_FIRST_LAST_NAME });
                                                 Info.fire({ title: "Bienvenue dans "+packageJSON.name});
                                                 setTimeout(() => {
                                                         window.location.href = BASEROOT;
@@ -177,7 +180,8 @@ export const UtilisateurSlice = createSlice({
                                         }
                                 } else {
                                         state.loginUtilisateur = [];
-                                        purgeStrorage();
+                                        purgeStrorage("loginUtilisateur");
+                                        purgeStrorage("currentProfile");
                                         if (action.payload.code_statut === "0") {
                                                 Danger.fire({ title: action.payload.desc_statut });
                                         }else{ 
@@ -185,7 +189,6 @@ export const UtilisateurSlice = createSlice({
                                         }
                                 }
                         })
-                        //doConnexion
                         .addCase(searchUtilisateur.rejected, (state, action) => {
                                 state.status.utilisateur = STATUS.ERROR;
                                 Danger.fire({ title: "Désolé ! La liste des utilisateurs n'a pas pu être chargée" });
@@ -193,7 +196,7 @@ export const UtilisateurSlice = createSlice({
         },
 });
 
-export const { setModalCompte, setmodalLockFrame, setUtilisateurList, setCurrentUtilisateur, setCurrentProfile, setLoginUtilisateur, setMenu, setMenuSate, setSubMenuState, setPagination, setformErreur, setFileImg, setModalUtilisateur, setModalProfile, status, menu } = UtilisateurSlice.actions;
+export const { setModalCompte, setmodalLockFrame, setUtilisateurList, setCurrentUtilisateur, setCurrentProfile, setLoginUtilisateur, setMenu, setMenuSate, setSubMenuState, setPagination, setformErreur, setFileImg, setModalUtilisateur, setModalProfile, status, menu, setModalPreferences } = UtilisateurSlice.actions;
 export default UtilisateurSlice.reducer;
 
 

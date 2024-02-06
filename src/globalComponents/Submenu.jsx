@@ -13,21 +13,21 @@ const { menu } = useSelector((state) => state.utilisateurs);
             {
                 menu.map((item, index) => {
                     return (
-                        <div key={"SubmenuTop" + index} className={"" + item.state === "active" ? "submenu show" : "submenu"} >
+                        <div key={"SubmenuTop" + index} className={"" + item?.state === "active" ? "submenu show" : "submenu"} >
                             <div className="menu-title">
-                                <h3>{item.title}</h3>
+                                <h3>{item?.title}</h3>
                             </div>
                             <ul className="submenu-list" >
                             {
-                                item.submenuList.length > 0 ?
-                                    item.submenuList.map((item, key) => {
+                                item?.submenuList.length > 0 ?
+                                    item?.submenuList.map((item, key) => {
                                         return (
                                             <li key={"Submenu" + key} >
                                                 {
                                                     BASEROOT === "/" ?
-                                                        <a href={item.link}> {item.name} </a>
+                                                        <a href={item?.link}> {item?.name} </a>
                                                         :
-                                                        <a href={"/convergence" + item.link}> {item.name} </a>
+                                                        <a href={"/convergence" + item?.link}> {item?.name} </a>
                                                 }
                                             </li>
                                         );

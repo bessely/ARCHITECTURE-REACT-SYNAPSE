@@ -4,7 +4,7 @@ import { Danger } from '../services/CustomToast';
 import { doDisConnexion, menuDispose } from '../services/Utilisateur';
 import { getThisInLocalstore } from '../services/globalFunction';
 import { BASEROOT } from '../services/serveur';
-import { setCurrentProfile, setLoginUtilisateur, setMenu, setSubMenuState } from '../store/Utilisateurs/Utilisateur';
+import { setCurrentProfile, setLoginUtilisateur, setMenu, setModalPreferences, setSubMenuState } from '../store/Utilisateurs/Utilisateur';
 import Submenu from './Submenu';
 import UserSectionBottom from './UserSectionBottom';
 
@@ -12,7 +12,7 @@ import UserSectionBottom from './UserSectionBottom';
  * @returns JSX
  */
 function Menu() {
-    const { menu, subMenuState, currentProfile } = useSelector((state) => state.utilisateurs);
+    const { menu, subMenuState, currentProfile, modalPreferences } = useSelector((state) => state.utilisateurs);
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(setLoginUtilisateur(getThisInLocalstore("loginUtilisateur")));
@@ -76,7 +76,7 @@ function Menu() {
                                             <div className="base-menu">
                                                 <div className="base-icons">
                                                     {
-                                                        item.svg ?
+                                                        item?.svg ?
                                                             <i className={item.svg +" fs-4 text-white font-weight-lighter"}  />
                                                         :
                                                             <i className={"far fa-question fs-4 text-white font-weight-lighter"} />
@@ -98,6 +98,14 @@ function Menu() {
                 </ul>
                 {/* section bottom side bar */}
                 <div className="sidebar-bottom-actions">
+                    <div className="external-links">
+                            {/* <ReactTooltip />
+                            <i role="button" data-tip={"Préférences"} data-background-color="orange" className={"far fa-sliders fs-4 text-white font-weight-lighter"} onClick={(e)=>{ e.preventDefault(); dispatch(setModalPreferences({...modalPreferences,open:true, size:"profil", title:"Préférences & accéssibilité"})) }}/> */}
+                            <a rel="noreferrer" href='###'>
+                                <i role="button" className={"far fa-sliders fs-4 text-white font-weight-lighter"} onClick={(e)=>{ e.preventDefault(); dispatch(setModalPreferences({...modalPreferences,open:true, size:"profil", title:"Préférences & accéssibilité"})) }}/>   
+                                <div className="tooltip"><span>Préférences</span></div>
+                            </a>
+                    </div>
                     <div className="external-links">
                         <a rel="noreferrer" target="_blank" href={BASEROOT+"documentation/Guide utilisateur Convergence V1.2.pdf"}>
                             <i className={"far fa-book-open-cover fs-4 text-warning font-weight-lighter"} />

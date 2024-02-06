@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import DataTable from '../../../globalComponents/DataTable';
 import Modal from '../../../globalComponents/Modal';
 import { Danger } from '../../../services/CustomToast';
-import { formatLargeLabel, getCurrentPath, getThisInLocalstore } from '../../../services/globalFunction';
-import { bindProfilToCompte, bindProfilToUser } from '../../../services/profil';
+import { bindProfilToCompte, bindProfilToUser } from '../../../services/Profil';
+import { formatLargeLabel, getCurrentPath, getThisInLocalstore, purgeStrorage } from '../../../services/globalFunction';
 import { setModalAssoProfil, } from '../../../store/Profil/Profil';
 import RenderActionProfil from './RenderActionProfil';
 
@@ -14,7 +14,12 @@ function ModalAssoProfil() {
     const { status, profilList, modalAssoProfil } = useSelector(state => state.profils);
     const { currentUtilisateur } = useSelector(state => state.utilisateurs);
 
-
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (!modalAssoProfil.open) {
+            purgeStrorage("tabChecked");
+        }
+    }, [modalAssoProfil.open]);
     /** soumission du rapprochement automatique
      *  @évènement onClick
      */
@@ -29,7 +34,7 @@ function ModalAssoProfil() {
         if (getCurrentPath() === "Societe") {
             dispacth(bindProfilToCompte());
         }
-        dispacth(setModalAssoProfil({ ...modalAssoProfil,open:false}));
+            dispacth(setModalAssoProfil({ ...modalAssoProfil,open:false}));
         }
     };
 

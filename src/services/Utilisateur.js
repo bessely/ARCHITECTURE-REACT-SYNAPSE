@@ -254,13 +254,13 @@ export const doDisConnexion = createAsyncThunk('utilisateur/doDisConnexion', asy
                         body   : bodyFormData
                 });
                 await res.json();
-                purgeStrorage();
-                Success.fire({ title: "A bientôt" });
+                purgeStrorage("loginUtilisateur");
+                purgeStrorage("currentProfile");
                 window.location.href = landingPage ? landingPage : BASEROOT+"Connexion";
                 return;
         } catch (error) {
-                Success.fire({ title: "A bientôt" });
-                purgeStrorage();
+                purgeStrorage("loginUtilisateur");
+                purgeStrorage("currentProfile");
                 window.location = landingPage ? landingPage : BASEROOT+"Connexion";
                 return;
         }
@@ -277,7 +277,8 @@ export const revoverPassWord = createAsyncThunk('utilisateur/revoverPassWord', a
                 });
                 let reponse = await res.json();
                 if (reponse.code_statut === "1") {
-                        purgeStrorage();
+                        purgeStrorage("loginUtilisateur");
+                        purgeStrorage("currentProfile");
                         Info.fire({ title: "Consultez vos mails !!!" });
                         setTimeout(() => {
                                 window.location.href = BASEROOT+"Connexion";
