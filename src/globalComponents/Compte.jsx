@@ -4,6 +4,7 @@ import FormPassUser from '../pages/utilisateur/component/FormPassUser';
 import FormUtilisateur from '../pages/utilisateur/component/FormUtilisateur';
 import { Info } from '../services/CustomToast';
 import { changePassWord, updateUtilisateur } from '../services/Utilisateur';
+import { filterData, validateData } from '../services/globalFunction';
 import { setCurrentUtilisateur, setModalCompte, setformErreur } from '../store/Utilisateurs/Utilisateur';
 import Modal from './Modal';
 
@@ -42,41 +43,23 @@ function Compte() {
    */
   const validation = (form) => {
     var erreur = {};
-    const regexmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (form === "pwsd") {
-      if (!currentUtilisateur.OLD_PASSWORD || currentUtilisateur.OLD_PASSWORD === "" || currentUtilisateur.OLD_PASSWORD.length <= 1) {
-        erreur.OLD_PASSWORD = "Vous devez saisir votre mot de passe actuel !";
-      }
-      if (!currentUtilisateur.NEW_PASSWORD2 || currentUtilisateur.NEW_PASSWORD2 === "" || currentUtilisateur.NEW_PASSWORD2.length < 4) {
-        erreur.NEW_PASSWORD2 = "Erreur sur la confirmation du mot de passe !";
-      }
+      erreur.OLD_PASSWORD  = validateData(currentUtilisateur.OLD_PASSWORD ,"string",[4,32],true);
+      erreur.NEW_PASSWORD  = validateData(currentUtilisateur.NEW_PASSWORD ,"string",[4,32],true);
       if (currentUtilisateur.NEW_PASSWORD !== currentUtilisateur.NEW_PASSWORD2) {
         erreur.NEW_PASSWORD2 = "les 2 mots de passe sont différents !";
+        erreur.NEW_PASSWORD  = "les 2 mots de passe sont différents !";
       }
-      return erreur;
+      return  filterData(erreur,true);
     }
-    if (!currentUtilisateur.STR_UTIFIRSTNAME || currentUtilisateur.STR_UTIFIRSTNAME === "" || currentUtilisateur.STR_UTIFIRSTNAME.length <= 1) {
-      erreur.STR_UTIFIRSTNAME = "Erreur sur le nom !";
-    }
-    if (!currentUtilisateur.STR_UTILASTNAME || currentUtilisateur.STR_UTILASTNAME === "" || currentUtilisateur.STR_UTILASTNAME.length <= 1) {
-      erreur.STR_UTILASTNAME = "Erreur sur le Prenom !";
-    }
-    if (!currentUtilisateur.STR_UTILOGIN || currentUtilisateur.STR_UTILOGIN.length <= 1) {
-      erreur.STR_UTILOGIN = "Erreur sur le UID !";
-    }
-    if (!currentUtilisateur.STR_UTIMATRICULE || currentUtilisateur.STR_UTIMATRICULE === "" || currentUtilisateur.STR_UTIMATRICULE.length <= 1) {
-      erreur.STR_UTIMATRICULE = " Erreur sur le matricule ! ";
-    }
-    if (!regexmail.test(String(currentUtilisateur.STR_UTIMAIL).toLowerCase())) {
-      erreur.STR_UTIMAIL = " Erreur sur le mail ! ";
-    }
-    if (currentUtilisateur.STR_UTIPHONE && currentUtilisateur.STR_UTIPHONE.length < 8) {
-      erreur.STR_UTIPHONE = " Erreur sur le format du téléphone ! ";
-    }
-    if (!currentUtilisateur.AGENCE) {
-      erreur.AGENCE = " Sélectionnez une agence! ";
-    }
-    return erreur;
+    erreur.STR_UTIFIRSTNAME = validateData(currentUtilisateur.STR_UTIFIRSTNAME ,"string",[3,32  ],true);
+    erreur.STR_UTILASTNAME  = validateData(currentUtilisateur.STR_UTILASTNAME  ,"string",[3,255 ],true);
+    erreur.STR_UTILOGIN     = validateData(currentUtilisateur.STR_UTILOGIN     ,"string",[3,255 ],true);
+    erreur.STR_UTIMATRICULE = validateData(currentUtilisateur.STR_UTIMATRICULE ,"string",[3,255 ],true);
+    erreur.STR_UTIMAIL      = validateData(currentUtilisateur.STR_UTIMAIL      ,"mail"  ,[3,255 ],true);
+    erreur.STR_UTIPHONE     = validateData(currentUtilisateur.STR_UTIPHONE     ,"string",[3,255 ],true);
+    erreur.AGENCE           = validateData(currentUtilisateur.AGENCE           ,"string",[3,255 ],true);
+    return  filterData(erreur,true);
   };
 
   /** soumission du formulaire de creation d'utilisateur après correction sauf en cas de suppression

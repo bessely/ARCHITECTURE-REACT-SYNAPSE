@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Modal from '../../../globalComponents/Modal';
 import { Info } from '../../../services/CustomToast';
 import { createUtilisateur, updateUtilisateur } from '../../../services/Utilisateur';
+import { filterData, validateData } from '../../../services/globalFunction';
 import { setCurrentUtilisateur, setModalUtilisateur, setformErreur } from '../../../store/Utilisateurs/Utilisateur';
 import FormUtilisateur from './FormUtilisateur';
+
 
 function ModalUtilisateur(){
     const { modalUtilisateur, currentUtilisateur, formErreur } = useSelector((state) => state.utilisateurs);
@@ -22,7 +24,7 @@ function ModalUtilisateur(){
     /** Renseigne les selections dans le state de l'acteur en cours(currentActor) de creation ou de modification
      *@param {string} typelist= {pays, groupe; statusjuri}
      *@param {object} item reviens avec l'element selectionné 
-     * @function
+     *@function
      */
     const setSelection = (item) => {
         Dispacth(setCurrentUtilisateur({ ...currentUtilisateur, [item.typeList]: item }));
@@ -35,32 +37,14 @@ function ModalUtilisateur(){
      */
     const validation = () => {
         var erreur = {};
-        const regexmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!currentUtilisateur.STR_UTIFIRSTNAME || currentUtilisateur.STR_UTIFIRSTNAME === "" || currentUtilisateur.STR_UTIFIRSTNAME.length <= 1) {
-            erreur.STR_UTIFIRSTNAME = "Erreur sur le nom !";
-        }
-        if (!currentUtilisateur.STR_UTILASTNAME || currentUtilisateur.STR_UTILASTNAME === "" || currentUtilisateur.STR_UTILASTNAME.length <= 1) {
-            erreur.STR_UTILASTNAME = "Erreur sur le Prenom !";
-        }
-
-        if (!currentUtilisateur.STR_UTILOGIN  || currentUtilisateur.STR_UTILOGIN.length <= 1) {
-            erreur.STR_UTILOGIN = "Erreur sur le UID !";
-        }
-
-        if (!currentUtilisateur.STR_UTIMATRICULE || currentUtilisateur.STR_UTIMATRICULE === "" || currentUtilisateur.STR_UTIMATRICULE.length <= 1) {
-            erreur.STR_UTIMATRICULE = " Erreur sur le matricule ! ";
-        }
-        if (!regexmail.test(String(currentUtilisateur.STR_UTIMAIL).toLowerCase())) {
-            erreur.STR_UTIMAIL = " Erreur sur le mail ! ";
-        }
-        if (currentUtilisateur.STR_UTIPHONE && currentUtilisateur.STR_UTIPHONE.length <= 8) {
-            erreur.STR_UTIPHONE = " Erreur sur le format du téléphone ! ";
-        }
-
-        if (!currentUtilisateur.AGENCE) {
-            erreur.AGENCE = " Sélectionnez une agence! ";
-        }
-        return erreur;
+        erreur.STR_UTIFIRSTNAME = validateData(currentUtilisateur.STR_UTIFIRSTNAME ,"string",[3,32  ],true);
+        erreur.STR_UTILASTNAME  = validateData(currentUtilisateur.STR_UTILASTNAME  ,"string",[3,255 ],true);
+        erreur.STR_UTILOGIN     = validateData(currentUtilisateur.STR_UTILOGIN     ,"string",[3,255 ],true);
+        erreur.STR_UTIMATRICULE = validateData(currentUtilisateur.STR_UTIMATRICULE ,"string",[3,255 ],true);
+        erreur.STR_UTIMAIL      = validateData(currentUtilisateur.STR_UTIMAIL      ,"mail"  ,[3,255 ],true);
+        erreur.STR_UTIPHONE     = validateData(currentUtilisateur.STR_UTIPHONE     ,"string",[4,255 ],true);
+        erreur.AGENCE           = validateData(currentUtilisateur.AGENCE?.value    ,"string",[3,255 ],true);
+        return  filterData(erreur,true);
     };
 
     /** soumission du formulaire de creation d'utilisateur après correction sauf en cas de suppression

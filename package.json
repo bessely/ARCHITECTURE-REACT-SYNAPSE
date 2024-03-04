@@ -2,8 +2,8 @@
   "name": "staterSynapseApp",
   "description": "Brève description de l'application à développer.",
   "version": "1.0.1",
-  "useAlerte":true,
-  "useVoiceAlerte":true,
+  "useAlerte": true,
+  "useVoiceAlerte": true,
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -17,6 +17,7 @@
     "apexcharts": "^3.36.3",
     "axios": "^0.27.2",
     "babel-plugin-macros": "^3.1.0",
+    "moment": "^2.30.1",
     "mui-color-input": "^1.0.4",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",

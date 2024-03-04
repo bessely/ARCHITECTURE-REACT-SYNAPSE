@@ -7,7 +7,7 @@ import { BASEROOT } from '../services/serveur';
  * @returns JSX
  */
 function Submenu({ state }) {
-const { menu } = useSelector((state) => state.utilisateurs);
+const { menu } = useSelector((state) => state?.utilisateurs);
     return (
         <div id="compact_submenuSidebar" className={"" + state === "active" ? "submenu-sidebar ps show" : "submenu-sidebar ps"} >
             {

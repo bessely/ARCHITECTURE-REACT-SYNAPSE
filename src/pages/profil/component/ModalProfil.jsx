@@ -4,7 +4,7 @@ import ErreurObject from '../../../globalComponents/ErreurObject';
 import Modal from '../../../globalComponents/Modal';
 import { Info } from "../../../services/CustomToast";
 import { collectProfilChecked, createProfil, createSwitchProfilPrivilege, updateProfil } from '../../../services/Profil';
-import { purgeStrorage } from '../../../services/globalFunction';
+import { filterData, purgeStrorage, validateData } from '../../../services/globalFunction';
 import { setCurrentProfil, setModalProfil, setformErreur } from '../../../store/Profil/Profil';
 import ListProfilPrivilege from './ListProfilPrivilege';
 
@@ -31,19 +31,11 @@ function ModalProfil() {
      **/
     const validation = () => {
         var erreur = {};
-        if (currentProfil.STR_PROTYPE && currentProfil.STR_PROTYPE.length <= 1) {
-            erreur.STR_PROTYPE = " Erreur sur le Type'! ";
-        }
-        if (!currentProfil.SOCIETE) {
-            erreur.SOCIETE = " Sélectionnez une Société! ";
-        }
-        if (!currentProfil.STR_PRODESCRIPTION || currentProfil.STR_PRODESCRIPTION === "" || currentProfil.STR_PRODESCRIPTION.length <= 1) {
-            erreur.STR_PRODESCRIPTION = " Erreur sur la Description ! ";
-        }
-        if (!currentProfil.STR_PRONAME || currentProfil.STR_PRONAME === "" || currentProfil.STR_PRONAME.length <= 1) {
-            erreur.STR_PRONAME = " Erreur sur le Libélé ! ";
-        }
-        return erreur;
+        erreur.STR_PROTYPE        = validateData(currentProfil.STR_PROTYPE        ,"string",[3,32  ],true);
+        // erreur.SOCIETE            = validateData(currentProfil.SOCIETE            ,"string",[3,255 ],true);
+        erreur.STR_PRODESCRIPTION = validateData(currentProfil.STR_PRODESCRIPTION ,"string",[3,255 ],true);
+        erreur.STR_PRONAME        = validateData(currentProfil.STR_PRONAME        ,"string",[3,255 ],true);
+        return  filterData(erreur,true);
     };
 
     /** soumission du formulaire de creation de profil après correction sauf en cas de suppression
@@ -101,7 +93,7 @@ function ModalProfil() {
                             <option value="Système">Système</option>
                             <option value="Métier">Métier</option>
                         </select>
-                        <ErreurObject>{formErreur.STR_SOCFORMATSWIFT}</ErreurObject>
+                        <ErreurObject>{formErreur.STR_PROTYPE}</ErreurObject>
                     </div>
                 </div>
                 <ListProfilPrivilege />

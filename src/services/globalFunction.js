@@ -1,3 +1,4 @@
+import moment from "moment";
 import { MemoryRouter } from "react-router";
 import { BASEURL } from "./serveur";
 
@@ -8,7 +9,7 @@ export const packageJSON = require("../../package.json");
     @param {string} NomDeLaVariable le nom de recuperation de la variable ou de la constante
     @author @bessely
  */
-export function writeThisInLocalstore(laVariable, NomDeLaVariable) {
+export const  writeThisInLocalstore = (laVariable, NomDeLaVariable)=>{
     localStorage.setItem(NomDeLaVariable, JSON.stringify(laVariable));
 }
 
@@ -16,14 +17,14 @@ export function writeThisInLocalstore(laVariable, NomDeLaVariable) {
     @param {string} NomDeLaVariable le nom de recuperation de la variable ou de la constante
     @author @bessely
 */
-export function getThisInLocalstore(NomDeLaVariable) {
+export const getThisInLocalstore = (NomDeLaVariable) => {
     return (JSON.parse(localStorage.getItem(NomDeLaVariable)));
 }
 /** VIDER UNE MEMORE OU LE LOCAL STORAGE EN ENTIER 
     @param {string} NomDeLaVariable le nom de recuperation de la variable ou de la constante
     @author @bessely
 */
-export function purgeStrorage(NomDeLaVariable) {
+export const purgeStrorage = (NomDeLaVariable) => {
     if (NomDeLaVariable===undefined) {
         localStorage.clear();
     } else {
@@ -36,7 +37,7 @@ export function purgeStrorage(NomDeLaVariable) {
     @param {string} sParam le nom de du parametre a recupérer dans l'url
     @author @bessely
 */
-export function getUrlParameter(sParam) {
+export const  getUrlParameter = (sParam)=>{
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
     sURLVariables = sPageURL.split('&'), sParameterName, i;
     for (i = 0; i < sURLVariables.length; i++) {
@@ -53,7 +54,7 @@ export function getUrlParameter(sParam) {
  * @returns {string}
  * @author @bessely
  */
-export function getCurrentPath(){
+export const getCurrentPath = () =>{
     let pathname = window.location.pathname;
     return pathname.split("/").pop();
 }
@@ -63,7 +64,7 @@ export function getCurrentPath(){
  * @returns Origine url
  * @author @bessely
  */
-export function getUrlOrigin() {
+export const getUrlOrigin = () =>{
     return (window.location.protocol+"//"+window.location.hostname);
 }
 
@@ -73,7 +74,7 @@ export function getUrlOrigin() {
  *@returns {string}
  *@author @bessely
  */
-export function formatLargeLabel(maxCaract,label){
+export const formatLargeLabel = (maxCaract,label) =>{
         if (label.length > maxCaract) {
             return label.toString().substring(0, maxCaract) + "..."
         }
@@ -148,4 +149,76 @@ export const fileName = ()=>{
     console.log(__filename);
     console.log(__dirname);
     console.log(MemoryRouter);
+}
+
+/**
+ * Controle la variable selon les spécifications demandées
+ * @param {any} value 
+ * @param {string} name l'erreur à retouné
+ * @param {any} requiredType 
+ * @param {array} size min - max au the value 
+ * @param {boolean} required
+ * @param {object} api 
+ * @returns 
+ */
+export const validateData = (value, requiredType, [minlength=0,maxLength=1000], required=false) =>{
+    if (value!==undefined && value!=="" && value!==null) {
+        if (!(requiredType!==undefined &&  requiredType!==""  && typeof(value)==requiredType)) {
+            if (requiredType!=="mail" && requiredType!=="date" ) {
+                return "Le champs doit être de type "+requiredType;
+            }
+        }
+        if (requiredType!==undefined && requiredType!=="" && requiredType!==null) {
+            if (requiredType==="mail") {
+                const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if ( !(emailRegex.test(value)) ) {
+                    return "email invalide";
+                }
+            }
+            if (requiredType==="string") {
+                if ( !(value.length>= minlength && value.length <= maxLength) ) {
+                    if (minlength===maxLength) {
+                        return "exactement "+maxLength+" caractères requis";
+                    }
+                    return "entre "+minlength+" et "+maxLength+" caractères requis";
+                }
+            }
+            if (requiredType==="number") {
+                if ( !(value>= minlength && value <= maxLength) ) {
+                    if (!isNaN(value)) {
+                        return "entre "+minlength+" et "+maxLength+" caractères requis";
+                    }else{
+                        if (required) {
+                            return "obligatoire";
+                        }
+                    }
+                }
+            }
+            if (requiredType==="array" && Array.isArray(value)) {
+                if ( !(value.length> minlength && value.length <= maxLength) ) {
+                    return " au moins "+minlength+" enregistrement(s) requis";
+                }
+            }
+            if (requiredType==="date") {
+                if ( !(value.length === maxLength) ) {
+                    return "format DD/MM/YYYY requis";
+                }
+                if (moment(value, 'DD/MM/YYYY', true).format()==="Invalid date") {
+                    return "contient une date non valide";
+                }
+            }
+            return true;
+        }
+    }
+    if (required) {
+        return "obligatoire";
+    }
+    return true; // non bloquant au cas échéant
+}
+
+export const filterData = (data, condition) =>{
+    const newObject = Object.fromEntries(Object.entries(data).filter(([key, value]) => value !== condition));
+    console.log(data);
+    console.log(newObject);
+    return newObject;
 }

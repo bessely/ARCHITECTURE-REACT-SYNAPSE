@@ -8,8 +8,8 @@ function ErreurObject({children}) {
     if (children!=="" && children!==undefined) {
         return (
             <div className=" mt-1">
-                <span className="badge badge-danger w-100">
-                    <small className="small-10 font-weight-bold mt-0">{children}</small>
+                <span className="badge badge-danger font-weight-bold w-100">
+                {children}
                 </span>
             </div>
         )

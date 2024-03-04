@@ -4,6 +4,7 @@ import ErreurObject from '../../../globalComponents/ErreurObject';
 import Modal from '../../../globalComponents/Modal';
 import { createAgence, updateAgence } from '../../../services/Agence';
 import { Info } from "../../../services/CustomToast";
+import { filterData, validateData } from '../../../services/globalFunction';
 import { setCurrentAgence, setModalAgence, setformErreur } from '../../../store/Agences/Agence';
 function ModalAgence() {
     const { modalAgence, currentAgence, formErreur } = useSelector((state) => state.agences);
@@ -24,38 +25,17 @@ function ModalAgence() {
      */
     const validation = () => {
         var erreur    = {};
-        const regexmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (!currentAgence.STR_AGECODE || currentAgence.STR_AGECODE === "" || currentAgence.STR_AGECODE.length <= 1) {
-            erreur.STR_AGECODE ="Erreur sur le code !";
-        }
-        if (!currentAgence.STR_AGECODEBCEAO || currentAgence.STR_AGECODEBCEAO === "" || currentAgence.STR_AGECODEBCEAO.length <= 1) {
-            erreur.STR_AGECODEBCEAO ="Erreur sur le code BCEAO !";
-        }
-        if (currentAgence.STR_AGEDESCRIPTION && currentAgence.STR_AGEDESCRIPTION.length <= 1) {
-            erreur.STR_AGEDESCRIPTION = " Erreur sur la description ! ";
-        }
-        if (!currentAgence.STR_AGELOCALISATION || currentAgence.STR_AGELOCALISATION === "" || currentAgence.STR_AGELOCALISATION.length <= 3) {
-            erreur.STR_AGELOCALISATION = " Erreur sur la localisation ! ";
-        }
-        if (currentAgence.STR_AGEBP && currentAgence.STR_AGEBP.length <= 1) {
-            erreur.STR_AGEBP = "Erreur sur l'adresse postale ! ";
-        }
-        if (!regexmail.test(String(currentAgence.STR_AGEMAIL).toLowerCase())) {
-            erreur.STR_AGEMAIL = "Erreur sur le mail ! ";
-        }
-        if (!currentAgence.STR_AGEPHONE || currentAgence.STR_AGEPHONE === "" || currentAgence.STR_AGEPHONE.length <= 8) {
-            erreur.STR_AGEPHONE = "Erreur sur le format du téléphone ! ";
-        }
-        if (!currentAgence.STR_VILLE || currentAgence.STR_VILLE === "" || currentAgence.STR_VILLE.length <= 3) {
-            erreur.STR_VILLE = "Erreur sur la ville ! ";
-        }
-        if (currentAgence.STR_AGELONGITUDE && currentAgence.STR_AGELONGITUDE.length < 3) {
-            erreur.STR_AGELONGITUDE = "Erreur sur la longitude ! ";
-        }
-        if (currentAgence.STR_AGELATITUDE && currentAgence.STR_AGELATITUDE.length < 3) {
-            erreur.STR_AGELONGITUDE = "Erreur sur la latitude ! ";
-        }
-        return erreur;
+        erreur.STR_AGECODE         = validateData(currentAgence.STR_AGECODE         ,"string" , [3,32  ],true );
+        erreur.STR_AGECODEBCEAO    = validateData(currentAgence.STR_AGECODEBCEAO    ,"string" , [3,255 ],true );
+        erreur.STR_AGEDESCRIPTION  = validateData(currentAgence.STR_AGEDESCRIPTION  ,"string" , [3,255 ],false);
+        erreur.STR_AGELOCALISATION = validateData(currentAgence.STR_AGELOCALISATION ,"string" , [3,255 ],true );
+        erreur.STR_AGEBP           = validateData(currentAgence.STR_AGEBP           ,"string" , [3,255 ],false);
+        erreur.STR_AGEMAIL         = validateData(currentAgence.STR_AGEMAIL         ,"mail"   , [6,255 ],true);
+        erreur.STR_AGEPHONE        = validateData(currentAgence.STR_AGEPHONE        ,"string" , [4,255 ],true );
+        erreur.STR_VILLE           = validateData(currentAgence.STR_VILLE           ,"string" , [3,255 ],true );
+        erreur.STR_AGELONGITUDE    = validateData(currentAgence.STR_AGELONGITUDE    ,"string" , [3,255 ],false);
+        erreur.STR_AGELATITUDE     = validateData(currentAgence.STR_AGELATITUDE     ,"string" , [3,255 ],false);
+        return  filterData(erreur,true);
     };
 
     /** soumission du formulaire de creation d'agence après correction sauf en cas de suppression
