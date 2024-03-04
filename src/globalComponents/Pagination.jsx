@@ -5,7 +5,7 @@ export const PAGINATION = {listParPage:10, currentPage:0, changePageClick:false,
  * 
  * @param {function} onClick  la function callback a executé qd on cliquera sur un button de pagination
  * @param {integer} nbrPage  le nombre de page maximum a afficher
- * @param {boolean} nbrPage  activer le mode forcerPage ou pas 
+ * @param {boolean} forcePage  activer le mode forcerPage ou pas 
  * @param {string} typeStyle  le style de pagination a renvoyer [classic,compact], classique par defaut
  * @returns 
  */
