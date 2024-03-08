@@ -1,4 +1,5 @@
 import moment from "moment";
+import { matchIsValidColor } from "mui-color-input";
 import { MemoryRouter } from "react-router";
 import { BASEURL } from "./serveur";
 
@@ -164,7 +165,7 @@ export const fileName = ()=>{
 export const validateData = (value, requiredType, [minlength=0,maxLength=1000], required=false) =>{
     if (value!==undefined && value!=="" && value!==null) {
         if (!(requiredType!==undefined &&  requiredType!==""  && typeof(value)==requiredType)) {
-            if (requiredType!=="mail" && requiredType!=="date" ) {
+            if (requiredType!=="mail" && requiredType!=="date" && requiredType!=="date2" ) {
                 return "Le champs doit être de type "+requiredType;
             }
         }
@@ -186,7 +187,7 @@ export const validateData = (value, requiredType, [minlength=0,maxLength=1000], 
             if (requiredType==="number") {
                 if ( !(value>= minlength && value <= maxLength) ) {
                     if (!isNaN(value)) {
-                        return "entre "+minlength+" et "+maxLength+" caractères requis";
+                        return "doit être compris "+minlength+" et "+maxLength;
                     }else{
                         if (required) {
                             return "obligatoire";
@@ -199,12 +200,28 @@ export const validateData = (value, requiredType, [minlength=0,maxLength=1000], 
                     return " au moins "+minlength+" enregistrement(s) requis";
                 }
             }
+            if (requiredType==="object" && typeof(value)!=="object") {
+                return "un type objet est requis"
+            }
             if (requiredType==="date") {
                 if ( !(value.length === maxLength) ) {
                     return "format DD/MM/YYYY requis";
                 }
                 if (moment(value, 'DD/MM/YYYY', true).format()==="Invalid date") {
                     return "contient une date non valide";
+                }
+            }
+            if (requiredType==="date2") {
+                if ( !(value.length === maxLength) ) {
+                    return "format YYYY-MM-DD requis";
+                }
+                if (moment(value, 'YYYY-MM-DD', true).format()==="Invalid date") {
+                    return "contient une date non valide";
+                }
+            }
+            if (requiredType==="color") {
+                if (!matchIsValidColor(value)) {
+                    return "code couleur invalide"
                 }
             }
             return true;
@@ -216,6 +233,12 @@ export const validateData = (value, requiredType, [minlength=0,maxLength=1000], 
     return true; // non bloquant au cas échéant
 }
 
+/**
+ * Normalise un objet passer : retire les lignes qui ne respect pas la condition
+ * @param {object} data 
+ * @param {any} condition 
+ * @returns 
+ */
 export const filterData = (data, condition) =>{
     const newObject = Object.fromEntries(Object.entries(data).filter(([key, value]) => value !== condition));
     console.log(data);

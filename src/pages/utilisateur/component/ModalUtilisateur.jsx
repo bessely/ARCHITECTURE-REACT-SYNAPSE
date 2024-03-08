@@ -62,8 +62,7 @@ function ModalUtilisateur(){
             if (modalUtilisateur.mode === "modification"){
                 Dispacth(updateUtilisateur(currentUtilisateur));
             }
-        }
-        else {
+        }else {
             Info.fire({ title: "Corrigez les erreurs!" });
         }
     };
