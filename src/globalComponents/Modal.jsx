@@ -221,15 +221,15 @@ function Modal({children, modaleSate, setModalSate,OnActionBtnClick}) {
     return (
         <>
             <div onClick={(e) => { closeFromOutside(e) }} className={"" + (modaleSate.open ? "modal animated fadeInRight show" : "modal fade hide")} tabIndex={-1} role="dialog" aria-labelledby="myExtraLargeModalLabel" style={style} aria-modal="true">
-                <div className={"modal-dialog modal-"+modaleSate.size+""} role="document">
-                    <div className="modal-content">
+                <div className={""} role="document">
+                    <div className=" modal-content mx-auto" style={{position:'absolute', top:"1.3rem", left:"10rem", width: "80vw", height:"95vh"}}>
                         <div className="modal-header">
                             <h5 className="modal-title" id="myExtraLargeModalLabel">{modaleSate.title}</h5> 
                             <button onClick={(e) => { closeButtonTrigger(e) }} type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <svg xmlns="http://www.w3.org/2000/svg" width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="feather feather-x-circle"><circle cx={12} cy={12} r={10} /><line x1={15} y1={9} x2={9} y2={15} /><line x1={9} y1={9} x2={15} y2={15} /></svg>
                             </button>
                         </div>
-                        <div className="modal-body p-3" style={{ maxHeight: "700px", overflow: "auto" }}>
+                        <div className="modal-body p-3" style={{ maxHeight: "80vh", overflow: "auto" }}>
                                 {/* Votre contenu */}
                                     {children}
                                 {/* Votre contenu */}
