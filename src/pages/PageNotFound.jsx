@@ -35,7 +35,7 @@ function PageNotFound() {
                 <img src="APP_LOGO.png" width="150" className="navbar-logo" alt="logo" /> <br />
                 <h1 className='text-muted'>CONVERGENCE</h1>
                 <img width="550" className="m-0 p-0" src={BASEROOT + "assets/img/404-error-lost-in-space-animate.svg"} alt={404} />
-                <p className="mb-5 text-muted text-18">Désolé ! Vous avez tenté d'accéder à une page sur laquelle vous n'etes pas abilité.</p>
+                <p className="mb-5 text-danger">Veuillez nous excuser ! Il semble que vous ayez essayé de visiter une page pour laquelle vous n’avez pas les autorisations nécessaires. 😊</p>
                 <a className="btn btn-lg btn-primary btn-rounded" href={premierLienAutorise()}>Retouner vers une page autorisée</a>
             </div>
         )
