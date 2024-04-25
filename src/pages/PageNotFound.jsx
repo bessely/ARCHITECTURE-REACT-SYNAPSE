@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCurrentPath, getThisInLocalstore } from '../services/globalFunction';
+import { getCurrentPath, getThisInLocalstore, packageJSON } from '../services/globalFunction';
 import { BASEROOT } from '../services/serveur';
 
 function PageNotFound() {
@@ -33,7 +33,7 @@ function PageNotFound() {
         return (
             <div className="not-found-wrap text-center m-0 p-0">
                 <img src="APP_LOGO.png" width="150" className="navbar-logo" alt="logo" /> <br />
-                <h1 className='text-muted'>CONVERGENCE</h1>
+                <h1 className='text-muted'>{packageJSON.name.toLocaleUpperCase()}</h1>
                 <img width="550" className="m-0 p-0" src={BASEROOT + "assets/img/404-error-lost-in-space-animate.svg"} alt={404} />
                 <p className="mb-5 text-danger">Veuillez nous excuser ! Il semble que vous ayez essayé de visiter une page pour laquelle vous n’avez pas les autorisations nécessaires. 😊</p>
                 <a className="btn btn-lg btn-primary btn-rounded" href={premierLienAutorise()}>Retouner vers une page autorisée</a>
@@ -43,7 +43,7 @@ function PageNotFound() {
     return (
         <div className="not-found-wrap text-center m-0 p-0">
                 <img src="APP_LOGO.png" width="150" className="navbar-logo" alt="logo" /> <br />
-                <h1 className='text-muted'>CONVERGENCE</h1>
+                <h1 className='text-muted'>{packageJSON.name.toLocaleUpperCase()}</h1>
                 <img width="550" className="m-0 p-0" src={BASEROOT + "assets/img/404-error-lost-in-space-animate.svg"} alt={404} />
                 <p className="mb-5 text-muted text-18">Désolé ! la page que vous tentez de charger est introuvable.</p>
                 <a className="btn btn-lg btn-primary btn-rounded" href={BASEROOT + "Connexion"}>Retouner vers la page de connexion</a>

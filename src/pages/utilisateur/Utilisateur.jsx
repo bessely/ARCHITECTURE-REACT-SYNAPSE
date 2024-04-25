@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Container from '../../globalComponents/Container';
 import NavBar from '../../globalComponents/NavBar';
 import { PAGINATION } from "../../globalComponents/Pagination";
+import SearchZone from '../../globalComponents/SearchZone';
 import { loadDataUtilisateurList } from '../../services/Utilisateur';
 import { setCurrentUtilisateur, setModalUtilisateur, setformErreur } from '../../store/Utilisateurs/Utilisateur';
 import ListUtilisateur from './component/ListUtilisateur';
@@ -38,12 +39,11 @@ function Utilisateur() {
           <div className="layout-px-spacing">
             {/* CONTENT AREA */}
               <div className="row card component-card_9 p-3 mt-3" >
-                {/* ZONE DE RECHERCHE */}
-                <div className="card d-flex flex-wrap flex-row justify-content-between mb-3 p-3" style={{ backgroundColor: "#e0e6ed" }} >
-                  <div className="col-8 m-0">
-                    <input type="search" onChange={saisieEnCours} onKeyUp={handleKeyUp} value={saisie} className="form-control" id="search" aria-describedby="emailHelp1" placeholder="Rechercher une utilisateur : saisissez un mot clé" />
-                    <small id="emailHelp1" className="form-text text-muted">Taper sur la touche Enter pour demarrer la recherche.</small>
-                  </div>
+                <SearchZone
+                    saisie        = {saisie}
+                    saisieEnCours = {saisieEnCours}
+                    handleKeyUp   = {handleKeyUp}
+                >
                   <button className="col-2 btn btn-outline-primary m-0 p-0  btn-lg"
                           onClick={(e)=>{
                               dispatch(setformErreur([]));
@@ -53,8 +53,7 @@ function Utilisateur() {
                   >
                     Nouvel utilisateur
                   </button>
-                </div>
-                {/* ZONE DE RECHERCHE */}
+                </SearchZone>
                 <div className="widget-content widget-content-area br-6">
                   <ListUtilisateur />
                 </div>

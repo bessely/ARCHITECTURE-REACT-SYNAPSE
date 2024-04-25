@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Container from '../../globalComponents/Container';
 import NavBar from '../../globalComponents/NavBar';
 import { PAGINATION } from "../../globalComponents/Pagination";
+import SearchZone from '../../globalComponents/SearchZone';
 import { loadDataTypeListeList } from '../../services/Valeur';
 import { setCurrentTypeListe, setModalTypeListe } from '../../store/Valeur/Valeur';
 import { setformErreur } from '../../store/Valeur/ValeurListe';
@@ -43,12 +44,11 @@ function TypeListe() {
         <div className="layout-px-spacing">
           {/* CONTENT AREA */}
           <div className="row card component-card_9 p-3 mt-3 mx-0 mb-0" >
-              {/* ZONE DE RECHERCHE */}
-              <div className="card d-flex flex-wrap flex-row justify-content-between mb-3 p-3" style={{ backgroundColor: "#e0e6ed" }} >
-                <div className="col-8 m-0">
-                  <input type="search" onChange={saisieEnCours} onKeyUp={handleKeyUp} value={saisie} className="form-control" id="search" aria-describedby="emailHelp1" placeholder="Rechercher d'un TypeListe: saisissez un mot clé" />
-                  <small id="emailHelp1" className="form-text text-muted">Taper sur la touche Enter pour demarrer la recherche.</small>
-                </div>
+            <SearchZone
+                  saisie        = {saisie}
+                  saisieEnCours = {saisieEnCours}
+                  handleKeyUp   = {handleKeyUp}
+              >
                 <button className="col-2 btn btn-outline-primary m-0 p-0  btn-lg"
                   onClick={(e) => {
                     dispatch(setModalTypeListe({ open: true, mode: "creation", size: "xl", title: "Nouvel TypeListe", button: true, buttonName: "Enregistrer", inputstate: "", btnclass: "btn btn-primary" }));
@@ -57,8 +57,7 @@ function TypeListe() {
                   }}
                 >Nouvelle liste
                 </button>
-              </div>
-              {/* ZONE DE RECHERCHE */}
+              </SearchZone>
               <div className="widget-content widget-content-area br-6">
                 <ListTypeListe />
               </div>

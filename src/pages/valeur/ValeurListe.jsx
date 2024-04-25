@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PAGINATION } from "../../globalComponents/Pagination";
+import SearchZone from '../../globalComponents/SearchZone';
 import { searchListe } from '../../services/ValeurListe';
 import { setCurrentListe, setModalListe } from '../../store/Valeur/ValeurListe';
 import ListListe from './component/ListListe';
@@ -49,12 +50,11 @@ function ValeurList() {
 
   return (
     <div>
-      {/* ZONE DE RECHERCHE */}
-      <div className={"card d-flex flex-wrap flex-row justify-content-between mb-3 p-3"} style={{ backgroundColor: "#e0e6ed" }} >
-        <div className={"col-6 m-0"}>
-          <input type="search" onChange={saisieEnCours} onKeyUp={handleKeyUp} value={saisie} className="form-control" id="search" aria-describedby="emailHelp1" placeholder="Rechercher une Liste: saisissez un mot clé" />
-          <small id="emailHelp1" className="form-text text-muted">Taper sur la touche Enter pour demarrer la recherche.</small>
-        </div>
+      <SearchZone
+          saisie        = {saisie}
+          saisieEnCours = {saisieEnCours}
+          handleKeyUp   = {handleKeyUp}
+      >
         <button className={"col-2 btn btn-outline-primary m-0 p-0 "}
           onClick={(e) => {
             dispatch(setModalListe({ open: true, mode: "creation", size: "xl", title: "Nouvelle Liste", button: true, buttonName: "Enregistrer", inputstate: "", btnclass: "btn btn-primary" }))
@@ -63,8 +63,7 @@ function ValeurList() {
         >
           Nouvelle Liste
         </button>
-      </div>
-      {/* ZONE DE RECHERCHE */}
+      </SearchZone>
       {/*LA LISTE*/}
       <div className="widget-content widget-content-area br-6">
         <ListListe />

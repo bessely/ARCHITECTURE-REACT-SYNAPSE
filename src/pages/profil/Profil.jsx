@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import Container from "../../globalComponents/Container";
 import NavBar from "../../globalComponents/NavBar";
 import { PAGINATION } from "../../globalComponents/Pagination";
+import SearchZone from '../../globalComponents/SearchZone';
 import { loadDataProfilList } from '../../services/Profil';
 import { initProfilState, loadDataProfilPrivilegeList } from '../../store/Profil/Privilege';
 import { setCurrentProfil, setModalProfil, setformErreur } from '../../store/Profil/Profil';
@@ -52,29 +53,26 @@ function Profil() {
           {/* CONTENT AREA */}
           <div className="col mx-0 mt-3 p-0" id="cancel-row">
             <div className="row card component-card_9 p-3" >
-              {/* ZONE DE RECHERCHE */}
-              <div className="form card d-flex flex-wrap flex-row justify-content-between mb-3 p-3" style={{ backgroundColor: "#e0e6ed" }} >
-                <div className="col-8 m-0 field-wrapper input">
-                  <input type="search" onChange={saisieEnCours} onKeyUp={handleKeyUp} value={saisie} className="form-control" id="search" aria-describedby="emailHelp1" placeholder="Rechercher un Profil : saisissez un mot clé" />
-                  {/* eslint-disable-next-line react-hooks/exhaustive-deps */}
-                  <small id="emailHelp1" className="form-text text-muted">Taper sur la touche Enter pour demarrer la recherche.</small>
-                </div>
-                <button className="col-2 btn btn-outline-primary m-0 p-0  btn-lg" 
-                        onClick={(e)=>{
-                            e.preventDefault()
-                            dispatch(initProfilState())
-                            dispatch(setCurrentProfil({LG_PROID: "", STR_PRONAME:"", STR_PRODESCRIPTION:"", STR_PROTYPE: "", SOCIETE: [{}] }))
-                            dispatch(setformErreur([]))
-                            dispatch(setModalProfil({ open: true, mode:"creation", size: "xl", title: "Nouveau Profil", button:true,  buttonName:"Enregistrer", inputstate: "", btnclass: "btn btn-primary" }))
+              <SearchZone
+                    saisie        = {saisie}
+                    saisieEnCours = {saisieEnCours}
+                    handleKeyUp   = {handleKeyUp}
+                >
+                  <button className="col-2 btn btn-outline-primary m-0 p-0  btn-lg" 
+                          onClick={(e)=>{
+                              e.preventDefault()
+                              dispatch(initProfilState())
+                              dispatch(setCurrentProfil({LG_PROID: "", STR_PRONAME:"", STR_PRODESCRIPTION:"", STR_PROTYPE: "", SOCIETE: [{}] }))
+                              dispatch(setformErreur([]))
+                              dispatch(setModalProfil({ open: true, mode:"creation", size: "xl", title: "Nouveau Profil", button:true,  buttonName:"Enregistrer", inputstate: "", btnclass: "btn btn-primary" }))
+                            }
                           }
-                        }
-                >       Nouveau Profil
-                </button>
-              </div>
-              {/* ZONE DE RECHERCHE */}
-              <div className="widget-content widget-content-area br-6">
-                <ListProfil />
-              </div>
+                  >       Nouveau Profil
+                  </button>
+                </SearchZone>
+                <div className="widget-content widget-content-area br-6">
+                  <ListProfil />
+                </div>
             </div>
           </div>
           {/* CONTENT AREA */}

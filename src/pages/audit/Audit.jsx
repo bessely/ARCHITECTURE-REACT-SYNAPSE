@@ -4,6 +4,7 @@ import Select from 'react-select';
 import Container from "../../globalComponents/Container";
 import NavBar from "../../globalComponents/NavBar";
 import { PAGINATION } from "../../globalComponents/Pagination";
+import SearchZone from '../../globalComponents/SearchZone';
 import { CustumSelectStyl } from '../../services/CustumSelectStyl';
 import { loadDataPisteAuditList } from '../../services/PisteAudit';
 import { loadDataUtilisateurList } from '../../services/Utilisateur';
@@ -107,12 +108,11 @@ function PisteAudit() {
                             </div>
                             {/* ZONE DE TRI */}
                             {/* ZONE DE RECHERCHE */}
-                            <div className="form card d-flex flex-wrap flex-row justify-content-between mb-3 p-3" style={{ backgroundColor: "#e0e6ed" }} >
-                                <div className="col-8 m-0 field-wrapper input">
-                                    <input type="search" onChange={saisieEnCours} onKeyUp={handleKeyUp} value={saisie.search} className="form-control" id="search" aria-describedby="emailHelp1" placeholder="Affiner la recherche : saisissez un mot clé" />
-                                    <small id="emailHelp1" className="form-text text-muted">Taper sur la touche Enter pour demarrer la recherche.</small>
-                                </div>
-                            </div>
+                            <SearchZone
+                                saisie        = {saisie}
+                                saisieEnCours = {saisieEnCours}
+                                handleKeyUp   = {handleKeyUp}
+                            />
                             {/* ZONE DE RECHERCHE */}
                             <div className="widget-content widget-content-area br-6">
                                 <ListAudit />
