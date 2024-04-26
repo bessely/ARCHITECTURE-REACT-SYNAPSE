@@ -109,7 +109,7 @@ function PisteAudit() {
                             {/* ZONE DE TRI */}
                             {/* ZONE DE RECHERCHE */}
                             <SearchZone
-                                saisie        = {saisie}
+                                saisie        = {saisie.search}
                                 saisieEnCours = {saisieEnCours}
                                 handleKeyUp   = {handleKeyUp}
                             />
